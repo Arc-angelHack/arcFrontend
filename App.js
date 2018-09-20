@@ -1,49 +1,121 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapScreen from "./src/screens/MapScreen";
+import InformationScreen from './src/screens/InformationScreen';
+import CommunityScreen from './src/screens/CommunityScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+const styles = StyleSheet.create({
+  label: {
+    color: "#2e06e9",
+    fontSize: 12.2,
+    textAlign: 'center',
+    lineHeight: 16,
+    paddingBottom: 3,
+  },
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+const headerTitleStyle = {
+  flex: 1,
+  fontSize: 22,
+  alignSelf: 'center',
+  textAlign: 'center',
+};
+
+// TODO: Move to utils
+const getTabIcon = name => {
+  switch(name) {
+    case 'Map':
+      return 'map';
+    case 'Community':
+      return 'google-circles-communities';
+    case 'Board':
+      return 'clipboard-text';
+    case 'Profile':
+      return 'account-circle'
+  }
+};
+
+const MapStack = createStackNavigator(
+  {
+    Map: { screen: MapScreen },
+  },
+  {
+    navigationOptions: {
+      title: "Downtown",
+      headerTitleStyle,
+    },
+  },
+)
+
+const InformationStack = createStackNavigator(
+  {
+    Information: { screen: InformationScreen },
+  },
+  {
+    navigationOptions: {
+      title: "Update",
+      headerTitleStyle,
+    }
+  }
+);
+
+const CommunityStack = createStackNavigator(
+  {
+    Community: { screen: CommunityScreen },
+  },
+  {
+    navigationOptions: {
+      title: "WIP",
+      headerTitleStyle,
+    }
+  }
+);
+
+const ProfileStack = createStackNavigator(
+  {
+    Profile: { screen: ProfileScreen },
+  },
+  {
+    navigationOptions: { 
+      title: "Profile",
+      headerTitleStyle,
+    },
+  }
+)
+
+const TabScreens = createBottomTabNavigator(
+  {
+    Map: { screen: MapStack },
+    Board: { screen: InformationStack },
+    Community: { screen: CommunityStack },
+    Profile: { screen: ProfileStack }
+  },
+  {
+    initialRouteName: "Map",
+    order: ["Map", "Board", "Community", "Profile"],
+    navigationOptions: ({ navigation }) => {
+      const { routeName, routes } = navigation.state;
+      return {
+        tabBarIcon: (props) => <Icon name={getTabIcon(routeName)} size={24} color={props.tintColor} />,
+        tabBarLabel: (props) => props.focused ? <Text style={styles.label}>{routeName}</Text> : null
+      }
+    },
+    tabBarOptions:  {
+      activeTintColor: "#2e06e9",
+      inactiveTintColor: "#000000",
+      inactiveBackgroundColor: "#ffffff",
+      activeBackgroundColor: "#ffffff",
+    }
+  }
+);
+
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <TabScreens />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
