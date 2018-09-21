@@ -1,0 +1,4 @@
+export const GET_COORDS_START = 'app/GET_COORDS_START';
+export const GET_COORDS_SUCCESS = 'app/GET_COORDS_SUCCESS';
+export const GET_COORDS_FAILED = 'app/GET_COORDS_FAILED';
+

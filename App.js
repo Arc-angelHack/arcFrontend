@@ -4,6 +4,7 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from "react-redux";
 import store from "./src/store.js";
+import { getGeoLocation } from './src/actionCreators/app';
 import MapScreen from "./src/screens/MapScreen";
 import InformationScreen from './src/screens/InformationScreen';
 import CommunityScreen from './src/screens/CommunityScreen';
@@ -115,6 +116,11 @@ const TabScreens = createBottomTabNavigator(
 );
 
 export default class App extends Component {
+
+  componentDidMount = () => {
+    store.dispatch(getGeoLocation())
+  };
+
   render() {
     return (
       <Provider store={store}>
