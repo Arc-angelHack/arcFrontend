@@ -59,5 +59,7 @@ export default function(state = initialState, action) {
                 ...state,
                 requests: state.requests.filter(request => request.id !== action.payload.request.id)
             };
+        default:
+            return initialState
     }
 }
