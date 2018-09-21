@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Provider } from "react-redux";
+import store from "./src/store.js";
 import MapScreen from "./src/screens/MapScreen";
 import InformationScreen from './src/screens/InformationScreen';
 import CommunityScreen from './src/screens/CommunityScreen';
@@ -115,7 +117,9 @@ const TabScreens = createBottomTabNavigator(
 export default class App extends Component {
   render() {
     return (
-      <TabScreens />
+      <Provider store={store}>
+        <TabScreens />
+      </Provider>
     );
   }
 }
