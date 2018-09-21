@@ -59,5 +59,7 @@ export default function(state = initialState, action) {
                 ...state,
                 incidents: state.incidents.filter(incident => incident.id !== action.payload.incident.id)
             };
+        default:
+            return initialState
     }
 }
