@@ -1,15 +1,14 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import MapView from 'react-native-maps';
 
 export default class MainMap extends React.PureComponent {
 
     render() {
         const { initialCoords } = this.props;
-        console.log(initialCoords );
         if (initialCoords  === null) {
-            return null;
+            return <ActivityIndicator style={{ alignSelf: 'center' }} />
         }
-        console.log(initialCoords );
         return (
             <MapView
                 style={{ height: "100%" }}
