@@ -15,7 +15,7 @@ export default function(state = initialState, action) {
         case types.GET_ALL_REQUESTS_SUCCESS:
             return {
                 ...state,
-                requests: action.payload.requests,
+                requests: action.payload,
                 isLoading: false
             };
         case types.GET_ALL_REQUESTS_FAILED:
@@ -60,6 +60,6 @@ export default function(state = initialState, action) {
                 requests: state.requests.filter(request => request.id !== action.payload.request.id)
             };
         default:
-            return initialState
+            return state
     }
 }

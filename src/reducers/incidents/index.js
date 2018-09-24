@@ -15,7 +15,7 @@ export default function(state = initialState, action) {
         case types.GET_ALL_INCIDENTS_SUCCESS:
             return {
                 ...state,
-                incidents: action.payload.incidents,
+                incidents: action.payload,
                 isLoading: false
             };
         case types.GET_ALL_INCIDENTS_FAILED:
@@ -60,6 +60,6 @@ export default function(state = initialState, action) {
                 incidents: state.incidents.filter(incident => incident.id !== action.payload.incident.id)
             };
         default:
-            return initialState
+            return state
     }
 }

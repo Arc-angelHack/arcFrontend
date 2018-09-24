@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from "react-redux";
 import store from "./src/store.js";
 import { getGeoLocation } from './src/actionCreators/app';
+import { getRequests } from './src/actionCreators/requests';
+import { getIncidents } from './src/actionCreators/incidents';
 import MapScreen from "./src/screens/MapScreen";
 import InformationScreen from './src/screens/InformationScreen';
 import CommunityScreen from './src/screens/CommunityScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import SOSScreen from './src/screens/SOSScreen';
+import IncidentReportScreen from './src/screens/IncidentReportScreen';
 
 const styles = StyleSheet.create({
   label: {
@@ -44,11 +48,16 @@ const getTabIcon = name => {
 const MapStack = createStackNavigator(
   {
     Map: { screen: MapScreen },
+    SOSScreen: { screen: SOSScreen },
+    IncidentReport: { screen: IncidentReportScreen }
   },
   {
-    navigationOptions: {
-      title: "Downtown",
-      headerTitleStyle,
+    navigationOptions: ({ navigation }) => {
+      const { routeName } = navigation.state;
+      return {
+        title: "Downtown",
+        headerTitleStyle,
+      }
     },
   },
 )
@@ -101,6 +110,13 @@ const TabScreens = createBottomTabNavigator(
     order: ["Map", "Board", "Community", "Profile"],
     navigationOptions: ({ navigation }) => {
       const { routeName, routes } = navigation.state;
+      if (routes.length > 1) {
+        return {
+          tabBarVisible: routeName === 'Map' && routes.length && (routes[1].routeName === 'SOSScreen' || routes[1].routeName === '') ? false : true,
+          tabBarIcon: (props) => <Icon name={getTabIcon(routeName)} size={24} color={props.tintColor} />,
+          tabBarLabel: (props) => props.focused ? <Text style={styles.label}>{routeName}</Text> : null
+        }
+      }
       return {
         tabBarIcon: (props) => <Icon name={getTabIcon(routeName)} size={24} color={props.tintColor} />,
         tabBarLabel: (props) => props.focused ? <Text style={styles.label}>{routeName}</Text> : null
@@ -118,7 +134,9 @@ const TabScreens = createBottomTabNavigator(
 export default class App extends Component {
 
   componentDidMount = () => {
-    store.dispatch(getGeoLocation())
+    store.dispatch(getGeoLocation());
+    store.dispatch(getRequests());
+    store.dispatch(getIncidents());
   };
 
   render() {
