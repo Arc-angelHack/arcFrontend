@@ -4,7 +4,7 @@ import CustomCallout from '../CustomCallout';
 
 export default class MapMarker extends React.PureComponent {
     render() {
-        const icon = this.props.type === 'sos' ? require('../../../assets/images/SOS/SOS@4X.png') : require('../../../assets/images/Incident/Incident@4X.png');
+        const icon = this.props.type === 'sos' ? require('../../../assets/images/SOS/SOS.png') : require('../../../assets/images/Incident/Incident.png');
         return (
             <Marker coordinate={this.props.latlng} image={icon} >
                 <Callout>

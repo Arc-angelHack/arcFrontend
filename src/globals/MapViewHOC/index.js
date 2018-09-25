@@ -33,7 +33,7 @@ export default class MapViewHOC extends React.PureComponent {
                         draggable
                         coordinate={initialCoords}
                         onDragEnd={(e) => this.props.sendCoords(e.nativeEvent.coordinate)}
-                        image={require('../../../assets/images/Locator/Locator@4X.png')}
+                        image={require('../../../assets/images/Locator/Locator.png')}
                     />
                 )}
             </MapView>
