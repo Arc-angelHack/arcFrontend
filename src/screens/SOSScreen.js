@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { spreadMarkers } from '../utils/markerUtils';
+import { createRequest } from '../actionCreators/requests';
 import PageLayout from '../globals/PageLayout';
 import Soscontent from '../containers/Map/components/SosContent';
 
@@ -30,12 +31,26 @@ class SOSScreen extends React.PureComponent {
         this.setState({ coords })
     }
 
+    handleSubmit = () => {
+        const { text, coords } = this.state;
+        if (coords === null) return;
+        this.props.createNewSos(text, coords);
+    };
+
     render() {
         const { showMap } = this.state;
         const { requests, incidents } = this.props;
         const markers = spreadMarkers(requests, incidents);
         return (
-            <PageLayout markers={markers} coords={this.props.coords} showMap={showMap} handlePressMap={this.handlePressMap} sendCoords={this.sendCoords}>
+            <PageLayout 
+                handleSubmit={this.handleSubmit} 
+                markers={markers} 
+                coords={this.props.coords} 
+                showMap={showMap} 
+                handlePressMap={this.handlePressMap} 
+                sendCoords={this.sendCoords}
+                navigation={this.props.navigation}
+            >
                 <Soscontent handleChangeText={this.handleChangeText}/>
             </PageLayout>
         );
@@ -48,4 +63,10 @@ const mapStateToProps = state => ({
     incidents: state.incidents.incidents,
 });
 
-export default connect(mapStateToProps, null)(SOSScreen);
+const mapDispatchToProps = dispatch => ({
+    createNewSos: (text, coords) => {
+        dispatch(createRequest(text, coords))
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SOSScreen);

@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         fontFamily: 'SourceSansPro-Regular',
         fontSize: 20,
         color: 'black',
+        paddingLeft: 0,
     },
     descriptionText: {
         fontFamily: 'SourceSansPro-Regular',

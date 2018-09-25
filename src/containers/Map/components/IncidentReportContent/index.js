@@ -11,11 +11,11 @@ export default class IncidentReportContent extends React.PureComponent {
                 <Avatar style={styles.avatar} />
                 <View style={styles.content}>
                     <Text style={styles.name}>Brian Admas</Text>
-                    <TextInput multiline style={styles.textInput} onChangeText={text => this.props.handleChangeText(text)} placeholder="Add Description" />
-                    {/* <View style={styles.row}>
+                    <Text style={styles.textInput}>I want to report an incident!</Text>
+                    <View style={styles.row}>
                         <Icon name="plus-circle" size={22} />
-                        <Text style={styles.descriptionText}>Add Description</Text>
-                    </View> */}
+                        <TextInput multiline style={styles.descriptionText} onChangeText={text => this.props.handleChangeText(text)} placeholder="Add Description" />
+                    </View>
                     <View style={styles.row}>
                         <Icon name="plus-circle" size={22} />
                         <Text style={styles.descriptionText}>Add Photo/Video</Text>

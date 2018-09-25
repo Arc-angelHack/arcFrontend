@@ -28,9 +28,14 @@ export default function(state = initialState, action) {
                 ...state,
             };
         case types.CREATE_INCIDENT_SUCCESS:
+            const incident = {
+                latitude: parseFloat(action.payload.latitude),
+                longitude: parseFloat(action.payload.longitude),
+                description: action.payload.description,
+            };
             return {
                 ...state,
-                incidents: [...state.incidents, action.payload.incident]
+                incidents: [...state.incidents, incident]
             };
         case types.CREATE_INCIDENT_FAILED:
             return {
