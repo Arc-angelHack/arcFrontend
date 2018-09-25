@@ -10,14 +10,21 @@ export default class PageLayout extends React.PureComponent {
         return (
             <View style={styles.container}>
                 {showMap 
-                    ? <MapViewHOC editMode sendCoords={this.props.sendCoords} initialCoords={coords} markers={[]} />
+                    ? <MapViewHOC markers={markers} editMode sendCoords={this.props.sendCoords} initialCoords={coords} markers={[]} />
                     : <EmptyMap handlePress={this.props.handlePressMap} />
                 }
                 <View style={styles.content}>
                     {this.props.children}
                 </View>
-                <TouchableOpacity onPress={() => this.props.handleSubmit} style={styles.button}>
-                    <Text style={styles.buttonText}>POST</Text>
+                <TouchableOpacity 
+                    onPress={() => {
+                        this.props.handleSubmit()
+                        this.props.navigation.goBack()
+                    }
+                    } 
+                    style={showMap ? styles.button : styles.buttonDisabled}
+                >
+                    <Text style={showMap ? styles.buttonText : styles.disabledText}>POST</Text>
                 </TouchableOpacity>
             </View>
         );

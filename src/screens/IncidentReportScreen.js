@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { spreadMarkers } from '../utils/markerUtils'; 
+import { createIncident } from '../actionCreators/incidents';
 import PageLayout from '../globals/PageLayout';
 import IncidentReportContent from '../containers/Map/components/IncidentReportContent';
 
@@ -26,16 +27,30 @@ class IncidentReportScreen extends React.PureComponent {
         this.setState({ showMap: true });
     }
 
-    sendCoords = coords => {
+    sendCoords = (coords) => {
         this.setState({ coords })
     }
+
+    handleSubmit = () => {
+        const { text, coords } = this.state;
+        if (coords === null) return;
+        this.props.createNewIncident(text, coords);
+    };
 
     render() {
         const { showMap } = this.state;
         const { requests, incidents } = this.props;
         const markers = spreadMarkers(requests, incidents);
         return (
-            <PageLayout markers={markers} coords={this.props.coords} showMap={showMap} handlePressMap={this.handlePressMap} sendCoords={this.sendCoords}>
+            <PageLayout 
+                navigation={this.props.navigation} 
+                markers={markers} 
+                coords={this.props.coords} 
+                showMap={showMap} 
+                handlePressMap={this.handlePressMap} 
+                sendCoords={this.sendCoords} 
+                handleSubmit={this.handleSubmit}
+            >
                 <IncidentReportContent handleChangeText={this.handleChangeText} />
             </PageLayout>
         );
@@ -48,4 +63,10 @@ const mapStateToProps = state => ({
     incidents: state.incidents.incidents,
 });
 
-export default connect(mapStateToProps, null)(IncidentReportScreen);
+const mapDispatchToProps = dispatch => ({
+    createNewIncident: (text, coords) => {
+        dispatch(createIncident(text, coords))
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(IncidentReportScreen);

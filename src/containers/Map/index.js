@@ -9,7 +9,6 @@ class Map extends React.PureComponent {
     render() {
         const { coords, requests, incidents } = this.props;
         const markers = spreadMarkers(requests, incidents);
-        console.log(incidents.length)
         return (
             <View style={styles.flex}>
                 <MainMap incidentCount={incidents.length} markers={markers} initialCoords={coords} navigation={this.props.navigation} />

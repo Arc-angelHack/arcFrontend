@@ -21,7 +21,19 @@ const styles = StyleSheet.create({
         fontFamily: 'SourceSansPro-Bold',
         fontSize: 20,
         color: 'white',
-    }
+    },
+    buttonDisabled: {
+        height: 59,
+        width: '100%',
+        backgroundColor: '#e9e9e9',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonText: {
+        fontFamily: 'SourceSansPro-Bold',
+        fontSize: 20,
+        color: '#676767',
+    },
 });
 
 export default styles;

@@ -28,9 +28,15 @@ export default function(state = initialState, action) {
                 ...state,
             };
         case types.CREATE_REQUEST_SUCCESS:
+            const request = {
+                latitude: parseFloat(action.payload.latitude),
+                longitude: parseFloat(action.payload.longitude),
+                description: action.payload.description,
+                status: 'In Progress'
+            };
             return {
                 ...state,
-                requests: [...state.requests, action.payload.request]
+                requests: [...state.requests, request]
             };
         case types.CREATE_REQUEST_FAILED:
             return {
