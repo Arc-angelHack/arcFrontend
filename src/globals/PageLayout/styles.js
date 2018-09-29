@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    buttonText: {
+    disabledText: {
         fontFamily: 'SourceSansPro-Bold',
         fontSize: 20,
         color: '#676767',

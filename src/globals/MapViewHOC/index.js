@@ -5,6 +5,13 @@ import MapMarker from '../MapMarker';
 import { mapStyle } from '../../consts';
 
 export default class MapViewHOC extends React.PureComponent {
+    componentDidMount = () => {
+        const { initialCoords } = this.props;
+        if (initialCoords !== null) {
+            this.props.sendCoords(initialCoords);
+        } 
+    }
+
     render() {
         const { markers, initialCoords } = this.props;
         if (initialCoords  === null) {
