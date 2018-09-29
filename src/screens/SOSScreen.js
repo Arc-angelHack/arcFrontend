@@ -51,7 +51,7 @@ class SOSScreen extends React.PureComponent {
                 sendCoords={this.sendCoords}
                 navigation={this.props.navigation}
             >
-                <Soscontent handleChangeText={this.handleChangeText}/>
+                <Soscontent handleChangeText={this.handleChangeText} coords={this.props.coords} />
             </PageLayout>
         );
     }

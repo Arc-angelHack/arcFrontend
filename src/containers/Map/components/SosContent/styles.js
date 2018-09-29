@@ -33,6 +33,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: 'black',
         paddingLeft: 10,
+    },
+    underline: {
+        textDecorationLine: 'underline',
+        textDecorationColor: '#2e06e9'
     }
 });
 
