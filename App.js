@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { StyleSheet, Text } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from "react-redux";
 import store from "./src/store.js";
@@ -16,6 +16,9 @@ import IncidentReportScreen from './src/screens/IncidentReportScreen';
 import OfferScreen from './src/screens/OfferScreen';
 import RequestScreen from './src/screens/RequestScreen';
 import HeaderTitle from './src/globals/HeaderTitle';
+import SignupWithEmailScreen from './src/screens/SignupWithEmail';
+import SignupScreen from './src/screens/Signup';
+import LoginScreen from './src/screens/Login';
 
 const styles = StyleSheet.create({
   label: {
@@ -36,7 +39,7 @@ const headerTitleStyle = {
 
 // TODO: Move to utils
 const getTabIcon = name => {
-  switch(name) {
+  switch (name) {
     case 'Map':
       return 'map';
     case 'Community':
@@ -111,7 +114,7 @@ const ProfileStack = createStackNavigator(
     Profile: { screen: ProfileScreen },
   },
   {
-    navigationOptions: { 
+    navigationOptions: {
       title: "Profile",
       headerTitleStyle,
     },
@@ -142,7 +145,7 @@ const TabScreens = createBottomTabNavigator(
         tabBarLabel: (props) => props.focused ? <Text style={styles.label}>{routeName}</Text> : null
       }
     },
-    tabBarOptions:  {
+    tabBarOptions: {
       activeTintColor: "#2e06e9",
       inactiveTintColor: "#000000",
       inactiveBackgroundColor: "#ffffff",
@@ -150,6 +153,16 @@ const TabScreens = createBottomTabNavigator(
     }
   }
 );
+
+const AuthStack = createStackNavigator({
+  Signup: SignupScreen,
+  SignupWithEmail: SignupWithEmailScreen,
+  Login: LoginScreen
+})
+const AppNavigator = createSwitchNavigator({
+  Auth: AuthStack,
+  Tabs: TabScreens
+})
 
 export default class App extends Component {
 
@@ -161,6 +174,7 @@ export default class App extends Component {
 
   render() {
     return (
+      //replace with AppNavigator and include TabScreens + SignupWithEmailScreen + SignupScreen
       <Provider store={store}>
         <TabScreens />
       </Provider>
