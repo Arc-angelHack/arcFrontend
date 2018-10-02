@@ -176,7 +176,7 @@ export default class App extends Component {
     return (
       //replace with AppNavigator and include TabScreens + SignupWithEmailScreen + SignupScreen
       <Provider store={store}>
-        <TabScreens />
+        <AppNavigator />
       </Provider>
     );
   }
