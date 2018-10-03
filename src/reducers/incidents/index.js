@@ -13,9 +13,17 @@ export default function(state = initialState, action) {
                 isLoading: true
             };
         case types.GET_ALL_INCIDENTS_SUCCESS:
+        const incidents = action.payload.map(incident => {
+            return {
+                latitude: parseFloat(incident.latitude),
+                longitude: parseFloat(incident.longitude),
+                description: incident.description,
+                timestamp: incident.created_at,
+            }
+        })
             return {
                 ...state,
-                incidents: action.payload,
+                incidents: incidents,
                 isLoading: false
             };
         case types.GET_ALL_INCIDENTS_FAILED:
@@ -32,6 +40,7 @@ export default function(state = initialState, action) {
                 latitude: parseFloat(action.payload.latitude),
                 longitude: parseFloat(action.payload.longitude),
                 description: action.payload.description,
+                timestamp: action.payload.created_at,
             };
             return {
                 ...state,

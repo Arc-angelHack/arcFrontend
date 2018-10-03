@@ -6,8 +6,8 @@ import { mapStyle } from '../../consts';
 
 export default class MapViewHOC extends React.PureComponent {
     componentDidMount = () => {
-        const { initialCoords } = this.props;
-        if (initialCoords !== null) {
+        const { initialCoords, mainMap } = this.props;
+        if (initialCoords !== null && !mainMap) {
             this.props.sendCoords(initialCoords);
         } 
     }
@@ -30,9 +30,14 @@ export default class MapViewHOC extends React.PureComponent {
                 provider={PROVIDER_GOOGLE}
                 customMapStyle={mapStyle}
             >
-                {!this.props.editMode && markers.map((marker, index) => {
+                {!this.props.editMode && this.props.requestMode === undefined && markers.map((marker, index) => {
                     return (
                         <MapMarker key={index} type={marker.type} latlng={marker.latlng} description={marker.description} status={marker.status} />
+                    );
+                })}
+                {!this.props.editMode && this.props.requestMode !== undefined && markers.map((marker, index) => {
+                    return (
+                        <MapMarker community key={index} type={marker.type} latlng={marker.latlng} description={marker.description} status={marker.status}  />
                     );
                 })}
                 {this.props.editMode && (

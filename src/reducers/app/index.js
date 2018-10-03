@@ -2,6 +2,7 @@ import * as types from '../../actionTypes/app';
 
 const initialState = {
     coords: null,
+    showList: true,
     isLoading: false,
 };
 
@@ -24,6 +25,16 @@ export default function(state = initialState, action) {
                 ...state,
                 isLoading: false
             };
+        case types.SHOW_COMMUNITY_LIST:
+            return {
+                ...state,
+                showList: true,
+            }
+        case types.HIDE_COMMUNITY_LIST:
+            return {
+                ...state,
+                showList: false,
+            }
         default:
             return state
     }

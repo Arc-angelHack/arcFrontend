@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         color: 'black'
+    },
+    image: {
+        height: 40,
+        width: 40,
     }
 });
 
