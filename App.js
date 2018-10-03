@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from "react-redux";
@@ -13,6 +13,7 @@ import CommunityScreen from './src/screens/CommunityScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import SOSScreen from './src/screens/SOSScreen';
 import IncidentReportScreen from './src/screens/IncidentReportScreen';
+import HeaderTitle from './src/globals/HeaderTitle';
 
 const styles = StyleSheet.create({
   label: {
@@ -80,9 +81,10 @@ const CommunityStack = createStackNavigator(
   },
   {
     navigationOptions: {
-      title: "WIP",
+      headerTitle: <HeaderTitle onChange={this.handleCommunityScreen} />,
       headerTitleStyle,
-    }
+    },
+    headerLayoutPreset: 'center'
   }
 );
 

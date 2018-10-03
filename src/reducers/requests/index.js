@@ -13,9 +13,22 @@ export default function(state = initialState, action) {
                 isLoading: true
             };
         case types.GET_ALL_REQUESTS_SUCCESS:
+            const requests = action.payload.map(request => {
+                return {
+                    latitude: parseFloat(request.latitude),
+                    longitude: parseFloat(request.longitude),
+                    description: request.description,
+                    status: 'In Progress',
+                    askFood: request.ask_food,
+                    askWater: request.ask_water,
+                    askMedical: request.ask_medical,
+                    askShelter: request.ask_shelter,
+                    timestamp: request.created_at,
+                }
+            });
             return {
                 ...state,
-                requests: action.payload,
+                requests,
                 isLoading: false
             };
         case types.GET_ALL_REQUESTS_FAILED:
@@ -32,7 +45,12 @@ export default function(state = initialState, action) {
                 latitude: parseFloat(action.payload.latitude),
                 longitude: parseFloat(action.payload.longitude),
                 description: action.payload.description,
-                status: 'In Progress'
+                status: 'In Progress',
+                askFood: action.payload.ask_food,
+                askWater: action.payload.ask_water,
+                askMedical: action.payload.ask_medical,
+                askShelter: action.payload.ask_shelter,
+                timestamp: action.payload.created_at,
             };
             return {
                 ...state,

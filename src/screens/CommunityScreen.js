@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import Community from '../containers/Community';
 
 export default class CommunityScreen extends React.PureComponent {
 
     render() {
         return (
-            <View />
+            <Community />
         );
     }
 }

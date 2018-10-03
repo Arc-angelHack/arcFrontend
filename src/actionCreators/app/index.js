@@ -13,4 +13,16 @@ const getGeoLocation = () => {
     }
 };
 
-export { getGeoLocation };
+const showCommunityList = () => {
+    return dispatch => {
+        dispatch({ type: types.SHOW_COMMUNITY_LIST });
+    }
+};
+
+const hideCommunityList = () => {
+    return dispatch => {
+        dispatch({ type: types.HIDE_COMMUNITY_LIST });
+    }
+}
+
+export { getGeoLocation, showCommunityList, hideCommunityList };
