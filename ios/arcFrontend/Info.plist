@@ -74,6 +74,7 @@
 		<string>AvenirLTStd-Book.otf</string>
 		<string>AvenirLTStd-Light.otf</string>
 		<string>AvenirLTStd-Roman.otf</string>
+		<string>Roboto-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

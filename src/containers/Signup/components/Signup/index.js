@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import FacebookButton from '../../globals/FacebookButton';
-import TwitterButton from '../../globals/TwitterButton';
-import GoogleButton from '../../globals/GoogleButton';
+import FacebookButton from '../../../../globals/FacebookButton';
+import TwitterButton from '../../../../globals/TwitterButton';
+import GoogleButton from '../../../../globals/GoogleButton';
 import styles from './styles';
-import GenericButton from '../../globals/GenericButton';
+import GenericButton from '../../../../globals/GenericButton';
 //TODO: Move styles into styles.js
 //TODO: Navigation to Login Page
 //TODO: Hook up to API
@@ -18,7 +18,7 @@ export default class Signup extends React.PureComponent {
   render() {
     return (
       <View style={styles.screenContainer}>
-        <Image source={require('../../../assets/images/OnearcLogo/onearc.png')} style={styles.logo} />
+        <Image source={require('../../../../../assets/images/OnearcLogo/onearc.png')} style={styles.logo} />
         <Text style={styles.text}>Get started with</Text>
         <View style={styles.buttonContainer}>
           <FacebookButton />

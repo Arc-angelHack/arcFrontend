@@ -1,5 +1,5 @@
 import React from 'react';
-import Signup from '../containers/Signup';
+import Signup from '../containers/Signup/components/Signup';
 
 export default class SignupScreen extends React.PureComponent {
   static navigationOptions = {
