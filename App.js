@@ -156,8 +156,9 @@ const TabScreens = createBottomTabNavigator(
 
 const AuthStack = createStackNavigator({
   Signup: SignupScreen,
+  Login: LoginScreen,
   SignupWithEmail: SignupWithEmailScreen,
-  Login: LoginScreen
+
 })
 const AppNavigator = createSwitchNavigator({
   Auth: AuthStack,
@@ -176,7 +177,7 @@ export default class App extends Component {
     return (
       //replace with AppNavigator and include TabScreens + SignupWithEmailScreen + SignupScreen
       <Provider store={store}>
-        <AppNavigator />
+        <InformationStack />
       </Provider>
     );
   }

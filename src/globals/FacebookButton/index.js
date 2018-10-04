@@ -7,7 +7,7 @@ export default class FacebookButton extends React.Component {
   render() {
     return (
       <TouchableOpacity style={styles.container}>
-        <Icon name="facebook-box" size={60} color={'white'} />
+        <Icon name="facebook" size={20} color={'white'} />
       </TouchableOpacity>
     )
   }

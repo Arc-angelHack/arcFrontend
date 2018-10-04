@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import FacebookButton from '../../globals/FacebookButton';
 import TwitterButton from '../../globals/TwitterButton';
 import GoogleButton from '../../globals/GoogleButton';
@@ -18,7 +18,7 @@ export default class Signup extends React.PureComponent {
   render() {
     return (
       <View style={styles.screenContainer}>
-        <Text style={styles.logo}>ONEARC LOGO</Text>
+        <Image source={require('../../../assets/images/OnearcLogo/onearc.png')} style={styles.logo} />
         <Text style={styles.text}>Get started with</Text>
         <View style={styles.buttonContainer}>
           <FacebookButton />
@@ -26,11 +26,12 @@ export default class Signup extends React.PureComponent {
           <TwitterButton />
         </View>
         <Text style={styles.text}>Or sign up with</Text>
-        <GenericButton text={"Email"} onPress={this.props.signUp} />
+        <GenericButton text={"Email"} onPress={this.props.signupWithEmail} />
         <View style={{ flexDirection: 'row', marginTop: 30 }}>
-          <Text style={styles.text}>Already onboard?  <Text style={styles.text__link}>Login</Text></Text>
+          <Text style={styles.text}>Already onboard? </Text>
+          <TouchableOpacity onPress={this.props.login}><Text style={styles.text__link}>Login</Text></TouchableOpacity>
         </View>
-      </View >
+      </View>
     );
   }
 }

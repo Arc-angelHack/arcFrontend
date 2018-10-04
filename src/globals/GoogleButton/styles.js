@@ -3,8 +3,10 @@ import { StyleSheet } from 'react-native';
 
 export default styles = StyleSheet.create({
   container: {
+    justifyContent: 'center',
     alignItems: 'center',
-    width: 100,
+    width: 85,
+    height: 60,
     borderRadius: 10,
     backgroundColor: 'white',
     marginLeft: 20,
@@ -12,5 +14,9 @@ export default styles = StyleSheet.create({
     shadowRadius: 5,
     shadowColor: 'white',
     shadowOffset: { height: 1, width: 0 },
+  },
+  image: {
+    width: 20,
+    height: 20
   }
 })

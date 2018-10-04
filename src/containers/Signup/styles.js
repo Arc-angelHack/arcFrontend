@@ -5,21 +5,20 @@ export default styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'flex-start',
-    padding: 30
+    padding: 58
   },
   logo: {
-    fontFamily: 'Avenir',
-    fontSize: 40,
-    textAlign: 'center',
-    marginTop: 30,
-    marginBottom: 80
+    height: 81,
+    width: 245,
+    marginBottom: 33
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     marginBottom: 30,
-    marginTop: 30
+    marginTop: 20,
+    marginRight: 5
   },
   emailButton: {
     borderRadius: 4,
@@ -28,12 +27,13 @@ export default styles = StyleSheet.create({
     marginTop: 30
   },
   text: {
-    fontFamily: 'OpenSans',
-    fontSize: 22
+    fontFamily: 'OpenSans-Regular',
+    color: 'black',
+    fontSize: 17
   },
   text__link: {
-    fontFamily: 'OpenSans',
-    fontSize: 22,
+    fontFamily: 'OpenSans-SemiBold',
+    fontSize: 17,
     color: '#368ef4'
   }
 })

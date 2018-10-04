@@ -22,27 +22,34 @@ export default class Login extends React.PureComponent {
   render() {
     return (
       <View style={styles.screenContainer}>
-        <Text style={styles.logo}>WELCOME BACK!</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.heading}>WELCOME BACK!</Text>
+        </View>
         <Text style={styles.text}>Login with</Text>
         <View style={styles.buttonContainer}>
           <FacebookButton />
           <GoogleButton />
           <TwitterButton />
         </View>
-        <Text style={styles.text}>Or</Text>
+        <Text style={styles.text}>or</Text>
         <View style={{ marginTop: 10, marginBottom: 10, alignItems: 'stretch' }}>
           <TextInput
+            returnKeyType="next"
+            autoCapitalize="none"
             value={this.state.email}
             placeholder="Email"
+            keyboardType="email-address"
             onChangeText={this.onEmailChange}
-            style={{ width: 350, borderBottomWidth: 2, borderBottomColor: '#e6e6e6' }}
+            style={this.state.email ? styles.text__input : styles.placeholder}
           />
           <TextInput
+            returnKeyType="go"
+            autoCapitalize="none"
             value={this.state.password}
             placeholder="Password"
             onChangeText={this.onPasswordChange}
             secureTextEntry={true}
-            style={{ width: 350, borderBottomWidth: 2, borderBottomColor: '#e6e6e6' }}
+            style={this.state.password ? styles.text__input : styles.placeholder}
           />
         </View>
         <GenericButton text={"Login"} onPress={() => { }} />

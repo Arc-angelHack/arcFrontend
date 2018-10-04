@@ -67,6 +67,13 @@
 		<string>SourceSansPro-Regular.otf</string>
 		<string>SourceSansPro-Semibold.otf</string>
 		<string>SourceSansPro-SemiboldIt.otf</string>
+		<string>OpenSans-Regular.otf</string>
+		<string>OpenSans-SemiBold.otf</string>
+		<string>AEH.ttf</string>
+		<string>Avenir-Medium.ttf</string>
+		<string>AvenirLTStd-Book.otf</string>
+		<string>AvenirLTStd-Light.otf</string>
+		<string>AvenirLTStd-Roman.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

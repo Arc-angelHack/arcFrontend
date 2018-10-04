@@ -8,10 +8,16 @@ export default class SignupScreen extends React.PureComponent {
   signUp = () => {
     this.props.navigation.navigate('Tabs')
   }
+  login = () => {
+    this.props.navigation.navigate('Login')
+  }
+  signupWithEmail = () => {
+    this.props.navigation.navigate('SignupWithEmail')
+  }
 
   render() {
     return (
-      <Signup signUp={this.signUp} />
+      <Signup signUp={this.signUp} login={this.login} signupWithEmail={this.signupWithEmail} />
     );
   }
 }
