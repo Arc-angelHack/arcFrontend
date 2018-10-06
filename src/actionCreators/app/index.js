@@ -29,6 +29,11 @@ const hideCommunityList = () => {
     }
 }
 
+const setLogin = () => 
+  dispatch => {
+    dispatch({ type: types.LOGIN_SUCCESS});
+  }
+
 const autoLogin = () =>
   async dispatch => {
     try {
@@ -78,4 +83,4 @@ const logout = () => {
 
 */
 
-export { getGeoLocation, signupWithEmail, autoLogin, showCommunityList, hideCommunityList };
+export { getGeoLocation, signupWithEmail, autoLogin, showCommunityList, hideCommunityList, setLogin };

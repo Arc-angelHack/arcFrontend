@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ActionButton from '../../../../globals/ActionButton';
 import styles from './styles';
 
 export default class InformationBoard extends React.Component {

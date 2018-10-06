@@ -1,19 +1,20 @@
 import React from 'react';
 import { View, ActivityIndicator, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
-import { autoLogin } from '../../../../actionCreators/app';
 import styles from './styles';
 
 export class AuthLoading extends React.Component {
-  constructor(props) {
-    super(props)
-    this.autoLogin()
-  }
+  componentDidMount = () => {
+    this.autoLogin();
+  };
 
   autoLogin = async () => {
-    await this.props.autoLogin();
-    const loggedIn = this.props.auth ? 'Tabs' : 'Auth';
-    this.props.handleNavigate(loggedIn);
+    const token = await AsyncStorage.getItem('token');
+    if (token !== null) {
+      this.props.handleNavigate('Tabs');
+    } else {
+      this.props.handleNavigate('Auth');
+    }
   }
 
   render() {
@@ -26,7 +27,7 @@ export class AuthLoading extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.app.auth
+  loggedIn: state.app.loggedIn
 })
 
 const mapDispatchToProps = (dispatch) => ({
