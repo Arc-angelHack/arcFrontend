@@ -4,7 +4,7 @@ import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator }
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from "react-redux";
 import store from "./src/store.js";
-import { getGeoLocation } from './src/actionCreators/app';
+import { getGeoLocation, setLogin } from './src/actionCreators/app';
 import { getRequests } from './src/actionCreators/requests';
 import { getIncidents } from './src/actionCreators/incidents';
 import MapScreen from "./src/screens/MapScreen";
@@ -172,9 +172,7 @@ const AppNavigator = createSwitchNavigator({
 );
 
 export default class App extends Component {
-
-  componentDidMount = () => {
-    await AsyncStorage.removeItem('token');
+  componentDidMount = async () => {
     store.dispatch(getGeoLocation());
     store.dispatch(getRequests());
     store.dispatch(getIncidents());
@@ -182,7 +180,6 @@ export default class App extends Component {
 
   render() {
     return (
-      //replace with AppNavigator and include TabScreens + SignupWithEmailScreen + SignupScreen
       <Provider store={store}>
         <AppNavigator />
       </Provider>

@@ -10,6 +10,12 @@ export default class AuthLoadingScreen extends React.PureComponent {
     this.props.navigation.navigate(stack);
   }
 
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.loggedIn) {
+      this.props.navigation.navigate('Tabs');
+    }
+  }
+
   render() {
     return <AuthLoading handleNavigate={this.handleNavigate} />
   }
