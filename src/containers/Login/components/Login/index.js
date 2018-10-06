@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import FacebookButton from '../../../../globals/FacebookButton';
 import TwitterButton from '../../../../globals/TwitterButton';
 import GoogleButton from '../../../../globals/GoogleButton';
 import styles from './styles';
 import GenericButton from '../../../../globals/GenericButton';
-//TODO: Move styles into styles.js
-//TODO: Navigation to Login Page
+
 //TODO: Hook up to API
 
 
@@ -54,7 +53,8 @@ export default class Login extends React.PureComponent {
         </View>
         <GenericButton text={"Login"} onPress={() => { }} />
         <View style={{ flexDirection: 'row', marginTop: 30 }}>
-          <Text style={styles.text}>Need an account?  <Text style={styles.text__link}>Login</Text></Text>
+          <Text style={styles.text}>Need an account? </Text>
+          <TouchableOpacity onPress={this.props.signUp}><Text style={styles.text__link}>Sign up</Text></TouchableOpacity>
         </View>
       </View>
     );

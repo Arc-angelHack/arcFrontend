@@ -11,13 +11,13 @@ export default class SignupScreen extends React.PureComponent {
   login = () => {
     this.props.navigation.navigate('Login')
   }
-  signupWithEmail = () => {
+  goSignupWithEmail = () => {
     this.props.navigation.navigate('SignupWithEmail')
   }
 
   render() {
     return (
-      <Signup signUp={this.signUp} login={this.login} signupWithEmail={this.signupWithEmail} />
+      <Signup signUp={this.signUp} login={this.login} goSignupWithEmail={this.goSignupWithEmail} />
     );
   }
 }

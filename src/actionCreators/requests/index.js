@@ -2,9 +2,9 @@ import * as types from '../../actionTypes/requests';
 import { baseURL } from '../../consts';
 
 const getRequestsStart = () => ({
-    type: types.GET_ALL_REQUESTS_START,
-  });
-  
+  type: types.GET_ALL_REQUESTS_START,
+});
+
 const getRequestsSuccess = payload => ({
   type: types.GET_ALL_REQUESTS_SUCCESS,
   payload,
@@ -13,7 +13,7 @@ const getRequestsSuccess = payload => ({
 const getRequestsFailure = () => ({
   type: types.GET_ALL_REQUESTS_FAILED,
 });
-  
+
 const getRequests = () =>
   async function (dispatch) {
     try {
@@ -22,11 +22,10 @@ const getRequests = () =>
       const payload = JSON.parse(response._bodyText);
       dispatch(getRequestsSuccess(payload.data))
     } catch (error) {
-      console.log(error);
       dispatch(getRequestsFailure(error));
     }
   };
-  
+
 const createRequestStart = () => ({
   type: types.CREATE_REQUEST_START,
 });
@@ -42,7 +41,7 @@ const createRequestFailure = () => ({
 
 const createRequest = (text, coords) =>
   async function (dispatch) {
-    {/* TODO: Shouldn't have hardcoded userIds */}
+    {/* TODO: Shouldn't have hardcoded userIds */ }
     try {
       const userId = 5;
       const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjV9LCJpYXQiOjE1Mzc4NDc0MDgsImV4cCI6MTUzODcxMTQwOH0.KmMq-PLa_IvNhs-JNCQgpCe9eNXBUtbnlVxZYiDj4wc";
@@ -69,7 +68,6 @@ const createRequest = (text, coords) =>
       // Temporary
       dispatch(createRequestSuccess(requestBody))
     } catch (error) {
-      console.log(error);
       dispatch(createRequestFailure(error));
     }
   };

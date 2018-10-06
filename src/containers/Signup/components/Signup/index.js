@@ -26,7 +26,7 @@ export default class Signup extends React.PureComponent {
           <TwitterButton />
         </View>
         <Text style={styles.text}>Or sign up with</Text>
-        <GenericButton text={"Email"} onPress={this.props.signupWithEmail} />
+        <GenericButton text={"Email"} onPress={this.props.goSignupWithEmail} />
         <View style={{ flexDirection: 'row', marginTop: 30 }}>
           <Text style={styles.text}>Already onboard? </Text>
           <TouchableOpacity onPress={this.props.login}><Text style={styles.text__link}>Login</Text></TouchableOpacity>

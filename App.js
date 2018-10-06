@@ -19,6 +19,7 @@ import HeaderTitle from './src/globals/HeaderTitle';
 import SignupWithEmailScreen from './src/screens/SignupWithEmail';
 import SignupScreen from './src/screens/Signup';
 import LoginScreen from './src/screens/Login';
+import AuthLoadingScreen from './src/screens/AuthLoadingScreen';
 
 const styles = StyleSheet.create({
   label: {
@@ -161,9 +162,14 @@ const AuthStack = createStackNavigator({
 
 })
 const AppNavigator = createSwitchNavigator({
+  AuthLoading: AuthLoadingScreen,
   Auth: AuthStack,
   Tabs: TabScreens
-})
+},
+  {
+    initialRouteName: 'AuthLoading',
+  }
+);
 
 export default class App extends Component {
 

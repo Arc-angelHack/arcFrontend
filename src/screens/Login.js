@@ -5,9 +5,12 @@ export default class LoginScreen extends React.PureComponent {
   static navigationOptions = {
     header: null
   }
+  signUp = () => {
+    this.props.navigation.navigate('Signup')
+  }
   render() {
     return (
-      <Login />
+      <Login signUp={this.signUp} />
     );
   }
 }
