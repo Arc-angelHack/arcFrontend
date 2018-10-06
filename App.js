@@ -13,6 +13,8 @@ import CommunityScreen from './src/screens/CommunityScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import SOSScreen from './src/screens/SOSScreen';
 import IncidentReportScreen from './src/screens/IncidentReportScreen';
+import OfferScreen from './src/screens/OfferScreen';
+import RequestScreen from './src/screens/RequestScreen';
 import HeaderTitle from './src/globals/HeaderTitle';
 
 const styles = StyleSheet.create({
@@ -78,11 +80,27 @@ const InformationStack = createStackNavigator(
 const CommunityStack = createStackNavigator(
   {
     Community: { screen: CommunityScreen },
+    Offer: { screen: OfferScreen },
+    Request: { screen: RequestScreen },
   },
   {
-    navigationOptions: {
-      headerTitle: <HeaderTitle onChange={this.handleCommunityScreen} />,
-      headerTitleStyle,
+    navigationOptions: ({ navigation }) => {
+      const { routeName } = navigation.state;
+      let title = '';
+      let visibleTabs = true;
+      if (routeName === 'Offer') {
+        title = 'Offer Help';
+        visibleTabs = false;
+      }
+      if (routeName === 'Request') {
+        titel = 'Request Help';
+        visibleTabs = false;
+      }
+      return {
+        headerTitle: title ? title : <HeaderTitle onChange={this.handleCommunityScreen} />,
+        headerTitleStyle,
+        tabBarVisible: visibleTabs,
+      }
     },
     headerLayoutPreset: 'center'
   }

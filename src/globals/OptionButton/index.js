@@ -6,8 +6,7 @@ import styles from './styles';
 export default class ActionButton extends React.PureComponent {
     render() {
         if (this.props.communityMap) {
-            const offerImage = require('../../../assets/images/OfferHelp/OfferHelp.png');
-            const requestImage = require('../../../assets/images/RequestHelp/RequestHelp.png');
+            const hand = require('../../../assets/images/Hands/Hand.png');
             return (
                 <View style={styles.wrapper}>
                     {this.props.showContext ? (
@@ -16,7 +15,7 @@ export default class ActionButton extends React.PureComponent {
                         </View>
                     ): null}
                     <TouchableOpacity onPress={this.props.onPress} style={[styles.container, { backgroundColor: this.props.color }]}>
-                        {this.props.offer ? <Image source={offerImage} style={styles.image} /> : <Image source={requestImage} style={styles.image} />} 
+                        <Image source={hand} style={[styles.image, this.props.requestHand ? styles.transform : null ]} /> 
                     </TouchableOpacity>
                 </View>
             );

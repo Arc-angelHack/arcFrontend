@@ -6,9 +6,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 20,
         marginRight: 17,
-        elevation: 4,
-        shadowColor: 'black',
-        shadowRadius: 3,
     },
     container: {
         height: 40,
@@ -17,6 +14,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 4,
+        shadowColor: 'black',
+        shadowRadius: 3,
     },
     sosText: {
         fontFamily: 'SourceSansPro-Bold',
@@ -44,8 +43,13 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     image: {
-        height: 40,
-        width: 40,
+        height: 13,
+        width: 23,
+    },
+    transform: {
+        transform: [
+            { rotateX: '180deg'}
+        ]
     }
 });
 
