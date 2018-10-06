@@ -10,9 +10,10 @@ export default styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     marginLeft: 20,
+    elevation: 5,
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    shadowColor: 'white',
+    shadowColor: 'black',
     shadowOffset: { height: 1, width: 0 },
   },
   image: {
