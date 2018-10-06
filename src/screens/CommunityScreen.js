@@ -5,7 +5,7 @@ export default class CommunityScreen extends React.PureComponent {
 
     render() {
         return (
-            <Community />
+            <Community navigation={this.props.navigation} />
         );
     }
 }

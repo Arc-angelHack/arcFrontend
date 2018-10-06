@@ -62,7 +62,7 @@ class Community extends React.PureComponent {
             medicalActive, 
             otherActive 
         } = this.state;
-        const { initialCoords, showList, incidents, requests } = this.props;
+        const { initialCoords, showList, incidents, requests, navigation } = this.props;
         return (
             <View style={styles.container}>
                 <ActionHeader 
@@ -79,12 +79,12 @@ class Community extends React.PureComponent {
                     incidents={incidents}
                     handleChangeRequestMode={this.handleChangeRequestMode}
                 />
-                {showList ? <List {...this.state} cards={requestMode ? requests : incidents} /> : null}
-                {!showList ? <CommunityMap requestMode={requestMode} initialCoords={initialCoords} incidents={incidents} requests={requests} /> : null}
+                {showList && <List {...this.state} cards={requestMode ? requests : incidents} />}
+                {!showList && <CommunityMap requestMode={requestMode} initialCoords={initialCoords} incidents={incidents} requests={requests} />}
                 <View style={[!showOpacity ? styles.bottomRow : styles.opacity]}>
                     <View style={showOpacity ? styles.opacityLayer : null}/>
-                    {showOpacity && <OptionButton communityMap offer showContext text="Offer Help" />}
-                    {showOpacity && <OptionButton communityMap request showContext text="Request Help" />}
+                    {showOpacity && <OptionButton onPress={() => navigation.navigate('Offer')} color="#368ef4" communityMap offer showContext text="Offer Help" />}
+                    {showOpacity && <OptionButton onPress={() => navigation.navigate('Request')} color="#ff6666" communityMap request showContext text="Request Help" requestHand />}
                     <ActionButton showActions={showOpacity} onPress={() => this.setState({ showOpacity: !showOpacity })} />
                 </View>
             </View>

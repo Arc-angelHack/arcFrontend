@@ -52,7 +52,6 @@ const createIncident = (text, coords) =>
         description: text,
         user_id: userId,
       };
-      console.log(requestBody);
       dispatch(createIncidentStart());
       const response = await fetch(`${baseURL}/api/${userId}/incidents`, {
         headers: {
