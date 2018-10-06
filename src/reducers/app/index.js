@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   auth: false,
   showList: true,
+  loggedIn: false,
 };
 
 export default function (state = initialState, action) {
@@ -35,13 +36,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        auth: true
+        loggedIn: true
       };
     case types.LOGIN_FAILED:
       return {
         ...state,
         isLoading: false,
-        auth: false
+        loggedIn: false
       };
     case types.SIGNUP_EMAIL_START:
       return {
@@ -52,13 +53,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        auth: true
+        loggedIn: true
       };
     case types.SIGNUP_EMAIL_FAILED:
       return {
         ...state,
         isLoading: false,
-        auth: false
+        loggedIn: false
       };
     case types.SHOW_COMMUNITY_LIST:
       return {

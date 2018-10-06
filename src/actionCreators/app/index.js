@@ -46,20 +46,25 @@ const autoLogin = () =>
 
 const signupWithEmail = (user) => {
   return async dispatch => {
-    dispatch({ type: types.SIGNUP_EMAIL_START })
-    const response = await fetch(`${baseURL}/api/users/signup`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: user
-    });
-    const token = JSON.parse(response._bodyText).token;
     try {
-      await AsyncStorage.setItem('token', token);
-      dispatch({ type: types.SIGNUP_EMAIL_SUCCESS })
+      dispatch({ type: types.SIGNUP_EMAIL_START })
+      const response = await fetch(`${baseURL}/api/users/signup`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+      if (response.status === 201) {
+        const token = JSON.parse(response._bodyText).token;
+        await AsyncStorage.setItem('token', token);
+        dispatch({ type: types.SIGNUP_EMAIL_SUCCESS })
+      } else {
+        dispatch({ type: types.SIGNUP_EMAIL_FAILED })
+      }
     } catch (error) {
+      console.log(error);
       dispatch({ type: types.SIGNUP_EMAIL_FAILED })
     }
   }

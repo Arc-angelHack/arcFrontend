@@ -64,7 +64,6 @@ export default class InformationBoard extends React.Component {
             );
           })
         }
-        <ActionButton />
       </ScrollView>
     )
   }

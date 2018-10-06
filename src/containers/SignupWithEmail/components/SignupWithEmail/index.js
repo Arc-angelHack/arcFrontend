@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
-import { signupWithEmail } from '../../../../actionCreators/app';
 import styles from './styles';
 
 //TODO: Move styles into styles.js
@@ -24,15 +22,13 @@ export class SignupWithEmail extends React.PureComponent {
   onConfirmPasswordChange = (text) => this.setState(() => ({ confirmPassword: text }))
 
   signupWithEmail = async () => {
-    const user = JSON.stringify({
+    const user = {
       firstname: this.state.name,
-      lastname: "PLACEHOLDER",
+      lastname: "",
       email: this.state.email,
       password: this.state.password,
-    });
+    };
     await this.props.signupWithEmail(user);
-    const loggedIn = this.props.auth;
-    this.props.handleNavigate(loggedIn ? 'Tabs' : 'Auth');
   }
 
   render() {
@@ -77,7 +73,7 @@ export class SignupWithEmail extends React.PureComponent {
             style={this.state.confirmPassword ? styles.text__input : styles.placeholder}
           />
         </View>
-        <GenericButton text={"Sign up"} onPress={this.signupWithEmail} />
+        <GenericButton text={"Sign up"} onPress={() => this.signupWithEmail()} />
         <View style={styles.onboard}>
           <Text style={styles.onboard__text}>Already onboard? </Text>
           <TouchableOpacity onPress={this.props.login}><Text style={styles.text__link}>Login</Text></TouchableOpacity>
@@ -87,13 +83,4 @@ export class SignupWithEmail extends React.PureComponent {
   }
 }
 
-
-const mapStateToProps = (state) => ({
-  auth: state.app.auth
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  signupWithEmail: (user) => dispatch(signupWithEmail(user))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignupWithEmail);
+export default (SignupWithEmail);

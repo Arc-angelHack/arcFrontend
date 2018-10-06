@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from "react-redux";
@@ -174,6 +174,7 @@ const AppNavigator = createSwitchNavigator({
 export default class App extends Component {
 
   componentDidMount = () => {
+    await AsyncStorage.removeItem('token');
     store.dispatch(getGeoLocation());
     store.dispatch(getRequests());
     store.dispatch(getIncidents());

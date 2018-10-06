@@ -29,7 +29,7 @@ export default styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: '#e6e6e6',
     fontFamily: 'OpenSans-Regular',
-    fontSize: 36,
+    fontSize: 16,
     paddingBottom: 0,
     textAlign: "justify"
   },
