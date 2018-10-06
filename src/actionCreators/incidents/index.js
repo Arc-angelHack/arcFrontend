@@ -2,14 +2,14 @@ import * as types from '../../actionTypes/incidents';
 import { baseURL } from '../../consts';
 
 const getIncidentsStart = () => ({
-    type: types.GET_ALL_INCIDENTS_START,
-  });
-  
+  type: types.GET_ALL_INCIDENTS_START,
+});
+
 const getIncidentsSuccess = payload => ({
   type: types.GET_ALL_INCIDENTS_SUCCESS,
   payload,
 });
-  
+
 const getIncidentsFailure = () => ({
   type: types.GET_ALL_INCIDENTS_FAILED,
 });
@@ -22,7 +22,6 @@ const getIncidents = () =>
       const payload = JSON.parse(response._bodyText);
       dispatch(getIncidentsSuccess(payload.data))
     } catch (error) {
-      console.log(error);
       dispatch(getIncidentsFailure(error));
     }
   };
@@ -42,7 +41,7 @@ const createIncidentFailure = () => ({
 
 const createIncident = (text, coords) =>
   async function (dispatch) {
-    {/* TODO: Shouldn't have hardcoded userIds */}
+    {/* TODO: Shouldn't have hardcoded userIds */ }
     try {
       const userId = 5;
       const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjV9LCJpYXQiOjE1Mzc4NDc0MDgsImV4cCI6MTUzODcxMTQwOH0.KmMq-PLa_IvNhs-JNCQgpCe9eNXBUtbnlVxZYiDj4wc";
@@ -65,7 +64,6 @@ const createIncident = (text, coords) =>
       // Temporary
       dispatch(createIncidentSuccess(requestBody))
     } catch (error) {
-      console.log(error);
       dispatch(createIncidentFailure(error));
     }
   };
