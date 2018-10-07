@@ -32,9 +32,10 @@ class OfferScreen extends React.PureComponent {
     }
 
     handleSubmit = () => {
-        const { text, coords } = this.state;
+        const { userId, token } = this.props;
+        const { text, coords, } = this.state;
         if (coords === null) return;
-        this.props.createNewRequest(text, coords);
+        this.props.createNewRequest(text, coords, userId, token);
     };
 
     render() {
@@ -64,8 +65,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    createNewRequest: (text, coords) => {
-        dispatch(createRequest(text, coords))
+    createNewRequest: (text, coords, userId, token) => {
+        dispatch(createRequest(text, coords, userId, token))
     },
 });
 

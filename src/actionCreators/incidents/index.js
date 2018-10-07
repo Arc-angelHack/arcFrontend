@@ -39,12 +39,9 @@ const createIncidentFailure = () => ({
   type: types.CREATE_INCIDENT_FAILED,
 });
 
-const createIncident = (text, coords) =>
+const createIncident = (text, coords, userId, token) =>
   async function (dispatch) {
-    {/* TODO: Shouldn't have hardcoded userIds */ }
     try {
-      const userId = 5;
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjV9LCJpYXQiOjE1Mzc4NDc0MDgsImV4cCI6MTUzODcxMTQwOH0.KmMq-PLa_IvNhs-JNCQgpCe9eNXBUtbnlVxZYiDj4wc";
       const requestBody = {
         latitude: `${coords.latitude}`,
         longitude: `${coords.longitude}`,
@@ -60,8 +57,9 @@ const createIncident = (text, coords) =>
         method: 'POST',
         body: JSON.stringify(requestBody)
       });
+      console.log(response);
       const payload = JSON.parse(response._bodyText);
-      // Temporary
+      console.log(payload);
       dispatch(createIncidentSuccess(requestBody))
     } catch (error) {
       dispatch(createIncidentFailure(error));

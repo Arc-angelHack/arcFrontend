@@ -32,9 +32,10 @@ class SOSScreen extends React.PureComponent {
     }
 
     handleSubmit = () => {
+        const { userId, token } = this.props;
         const { text, coords } = this.state;
         if (coords === null) return;
-        this.props.createNewSos(text, coords);
+        this.props.createNewSos(text, coords, userId, token);
     };
 
     render() {
@@ -59,13 +60,15 @@ class SOSScreen extends React.PureComponent {
 
 const mapStateToProps = state => ({
     coords: state.app.coords,
+    userId: state.app.userId,
+    token: state.app.token,
     requests: state.requests.requests,
     incidents: state.incidents.incidents,
 });
 
 const mapDispatchToProps = dispatch => ({
-    createNewSos: (text, coords) => {
-        dispatch(createRequest(text, coords))
+    createNewSos: (text, coords, userId, token) => {
+        dispatch(createRequest(text, coords, userId, token))
     },
 });
 

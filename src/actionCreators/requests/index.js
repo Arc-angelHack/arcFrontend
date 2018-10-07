@@ -39,12 +39,10 @@ const createRequestFailure = () => ({
   type: types.CREATE_REQUEST_FAILED,
 });
 
-const createRequest = (text, coords) =>
+const createRequest = (text, coords, userId, token) =>
   async function (dispatch) {
     {/* TODO: Shouldn't have hardcoded userIds */ }
     try {
-      const userId = 5;
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjV9LCJpYXQiOjE1Mzc4NDc0MDgsImV4cCI6MTUzODcxMTQwOH0.KmMq-PLa_IvNhs-JNCQgpCe9eNXBUtbnlVxZYiDj4wc";
       const requestBody = {
         latitude: `${coords.latitude}`,
         longitude: `${coords.longitude}`,
@@ -65,8 +63,8 @@ const createRequest = (text, coords) =>
         body: JSON.stringify(requestBody)
       });
       const payload = JSON.parse(response._bodyText);
-      // Temporary
-      dispatch(createRequestSuccess(requestBody))
+      console.log(payload);
+      dispatch(createRequestSuccess(payload))
     } catch (error) {
       dispatch(createRequestFailure(error));
     }

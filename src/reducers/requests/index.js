@@ -42,15 +42,15 @@ export default function(state = initialState, action) {
             };
         case types.CREATE_REQUEST_SUCCESS:
             const request = {
-                latitude: parseFloat(action.payload.latitude),
-                longitude: parseFloat(action.payload.longitude),
-                description: action.payload.description,
+                latitude: parseFloat(action.payload.request.latitude),
+                longitude: parseFloat(action.payload.request.longitude),
+                description: action.payload.request.description,
                 status: 'In Progress',
-                askFood: action.payload.ask_food,
-                askWater: action.payload.ask_water,
-                askMedical: action.payload.ask_medical,
-                askShelter: action.payload.ask_shelter,
-                timestamp: action.payload.created_at,
+                askFood: action.payload.request.ask_food,
+                askWater: action.payload.request.ask_water,
+                askMedical: action.payload.request.ask_medical,
+                askShelter: action.payload.request.ask_shelter,
+                timestamp: action.payload.request.created_at,
             };
             return {
                 ...state,

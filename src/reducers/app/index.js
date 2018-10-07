@@ -6,6 +6,8 @@ const initialState = {
   auth: false,
   showList: true,
   loggedIn: false,
+  token: null,
+  userId: null
 };
 
 export default function (state = initialState, action) {
@@ -36,7 +38,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        loggedIn: true
+        loggedIn: true,
+        token: action.token,
+        userId: ~~action.userId
       };
     case types.LOGIN_FAILED:
       return {
@@ -53,7 +57,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        loggedIn: true
+        loggedIn: true,
+        token: action.token,
+        userId: ~~action.userId
       };
     case types.SIGNUP_EMAIL_FAILED:
       return {
