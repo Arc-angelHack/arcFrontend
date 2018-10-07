@@ -24,11 +24,11 @@ class SignupWithEmailScreen extends React.PureComponent {
 
   render() {
     return (
-      <SignupWithEmail 
-        signupWithEmail={this.props.signup} 
-        handleNavigate={this.handleNavigate} 
-        loggedIn={this.props.loggedIn} 
-        login={this.login} 
+      <SignupWithEmail
+        signupWithEmail={this.props.signup}
+        handleNavigate={this.handleNavigate}
+        loggedIn={this.props.loggedIn}
+        login={this.login}
       />
     );
   }
