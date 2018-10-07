@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator, AsyncStorage } from 'react-native';
+import { setLogin } from '../../../../actionCreators/app';
 import { connect } from 'react-redux';
 import styles from './styles';
 
@@ -10,7 +11,10 @@ export class AuthLoading extends React.Component {
 
   autoLogin = async () => {
     const token = await AsyncStorage.getItem('token');
+    const userId = await AsyncStorage.getItem('userId');
+    console.log(token ,userId);
     if (token !== null) {
+      this.props.setLogin(userId, token);
       this.props.handleNavigate('Tabs');
     } else {
       this.props.handleNavigate('Auth');
@@ -31,7 +35,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  autoLogin: () => dispatch(autoLogin())
+  setLogin: (userId, token) => dispatch(setLogin(userId, token))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthLoading)

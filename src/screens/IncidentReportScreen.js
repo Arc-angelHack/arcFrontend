@@ -32,9 +32,10 @@ class IncidentReportScreen extends React.PureComponent {
     }
 
     handleSubmit = () => {
+        const { token, userId } = this.props;
         const { text, coords } = this.state;
         if (coords === null) return;
-        this.props.createNewIncident(text, coords);
+        this.props.createNewIncident(text, coords, userId, token);
     };
 
     render() {
@@ -59,13 +60,15 @@ class IncidentReportScreen extends React.PureComponent {
 
 const mapStateToProps = state => ({
     coords: state.app.coords,
+    token: state.app.token,
+    userId: state.app.userId,
     requests: state.requests.requests,
     incidents: state.incidents.incidents,
 });
 
 const mapDispatchToProps = dispatch => ({
-    createNewIncident: (text, coords) => {
-        dispatch(createIncident(text, coords))
+    createNewIncident: (text, coords, userId, token) => {
+        dispatch(createIncident(text, coords, userId, token))
     },
 });
 

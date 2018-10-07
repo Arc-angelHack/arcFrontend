@@ -29,18 +29,19 @@ const hideCommunityList = () => {
     }
 }
 
-const setLogin = () => 
+const setLogin = (userId, token) => 
   dispatch => {
-    dispatch({ type: types.LOGIN_SUCCESS});
+    dispatch({ type: types.LOGIN_SUCCESS, userId, token,});
   }
 
 const autoLogin = () =>
   async dispatch => {
     try {
       dispatch({ type: types.LOGIN_START })
-      const token = await AsyncStorage.getItem('token')
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
       if (token) {
-        dispatch({ type: types.LOGIN_SUCCESS })
+        dispatch({ type: types.LOGIN_SUCCESS, token, userId, })
       } else {
         dispatch({ type: types.LOGIN_FAILED })
       }
@@ -63,8 +64,11 @@ const signupWithEmail = (user) => {
       });
       if (response.status === 201) {
         const token = JSON.parse(response._bodyText).token;
+        const userId = JSON.parse(response._bodyText).id;
+        console.log(token, userId);
         await AsyncStorage.setItem('token', token);
-        dispatch({ type: types.SIGNUP_EMAIL_SUCCESS })
+        await AsyncStorage.setItem('userId', `${userId}`);
+        dispatch({ type: types.SIGNUP_EMAIL_SUCCESS, token, userId, })
       } else {
         dispatch({ type: types.SIGNUP_EMAIL_FAILED })
       }
