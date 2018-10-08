@@ -54,7 +54,7 @@ const manualLogin = (credentials) =>
   async dispatch => {
     try {
       dispatch({ type: types.LOGIN_START })
-      const response = await fetch(`${baseURL}api/users/login`, {
+      const response = await fetch(`${baseURL}/api/users/login`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -65,7 +65,6 @@ const manualLogin = (credentials) =>
       if (response.status === 200) {
         const token = JSON.parse(response._bodyText).token;
         const userId = JSON.parse(response._bodyText).id;
-        console.log(token, userId);
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('userId', `${userId}`);
         dispatch({ type: types.LOGIN_SUCCESS, token, userId });
@@ -82,7 +81,7 @@ const signupWithEmail = (user) => {
   return async dispatch => {
     try {
       dispatch({ type: types.SIGNUP_EMAIL_START })
-      const response = await fetch(`${baseURL}api/users/signup`, {
+      const response = await fetch(`${baseURL}/api/users/signup`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -93,7 +92,6 @@ const signupWithEmail = (user) => {
       if (response.status === 201) {
         const token = JSON.parse(response._bodyText).token;
         const userId = JSON.parse(response._bodyText).id;
-        console.log(token, userId);
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('userId', `${userId}`);
         dispatch({ type: types.SIGNUP_EMAIL_SUCCESS, token, userId, })
@@ -107,8 +105,6 @@ const signupWithEmail = (user) => {
   }
 }
 
-const logout = () => {
-
-}
+// TODO: Add logout
 
 export { getGeoLocation, signupWithEmail, autoLogin, manualLogin, showCommunityList, hideCommunityList, setLogin };
