@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 
 //TODO: Move styles into styles.js
@@ -35,44 +35,46 @@ export class SignupWithEmail extends React.PureComponent {
     return (
       <View style={styles.screenContainer}>
         <Text style={styles.heading}>WELCOME!</Text>
-        <View style={{ marginBottom: 50 }}>
-          <TextInput
-            returnKeyType="next"
-            enablesReturnKeyAutomatically={true}
-            value={this.state.name}
-            placeholder="Name"
-            onChangeText={this.onNameChange}
-            autoCapitalize="none"
-            style={this.state.name ? styles.text__input : styles.placeholder}
-          />
-          <TextInput
-            returnKeyType="next"
-            autoCapitalize="none"
-            value={this.state.email}
-            placeholder="Email"
-            keyboardType="email-address"
-            onChangeText={this.onEmailChange}
-            style={this.state.email ? styles.text__input : styles.placeholder}
-          />
-          <TextInput
-            returnKeyType="next"
-            autoCapitalize="none"
-            value={this.state.password}
-            placeholder="Password"
-            onChangeText={this.onPasswordChange}
-            secureTextEntry={true}
-            style={this.state.password ? styles.text__input : styles.placeholder}
-          />
-          <TextInput
-            returnKeyType="go"
-            autoCapitalize="none"
-            value={this.state.confirmPassword}
-            placeholder="Confirm Password"
-            onChangeText={this.onConfirmPasswordChange}
-            secureTextEntry={true}
-            style={this.state.confirmPassword ? styles.text__input : styles.placeholder}
-          />
-        </View>
+        <KeyboardAvoidingView behavior="position" enabled>
+          <View style={{ marginBottom: 50 }}>
+            <TextInput
+              returnKeyType="next"
+              enablesReturnKeyAutomatically={true}
+              value={this.state.name}
+              placeholder="Name"
+              onChangeText={this.onNameChange}
+              autoCapitalize="none"
+              style={this.state.name ? styles.text__input : styles.placeholder}
+            />
+            <TextInput
+              returnKeyType="next"
+              autoCapitalize="none"
+              value={this.state.email}
+              placeholder="Email"
+              keyboardType="email-address"
+              onChangeText={this.onEmailChange}
+              style={this.state.email ? styles.text__input : styles.placeholder}
+            />
+            <TextInput
+              returnKeyType="next"
+              autoCapitalize="none"
+              value={this.state.password}
+              placeholder="Password"
+              onChangeText={this.onPasswordChange}
+              secureTextEntry={true}
+              style={this.state.password ? styles.text__input : styles.placeholder}
+            />
+            <TextInput
+              returnKeyType="go"
+              autoCapitalize="none"
+              value={this.state.confirmPassword}
+              placeholder="Confirm Password"
+              onChangeText={this.onConfirmPasswordChange}
+              secureTextEntry={true}
+              style={this.state.confirmPassword ? styles.text__input : styles.placeholder}
+            />
+          </View>
+        </KeyboardAvoidingView>
         <GenericButton text={"Sign up"} onPress={() => this.signupWithEmail()} />
         <View style={styles.onboard}>
           <Text style={styles.onboard__text}>Already onboard? </Text>

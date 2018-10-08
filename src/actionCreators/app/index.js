@@ -18,20 +18,20 @@ const getGeoLocation = () => {
 };
 
 const showCommunityList = () => {
-    return dispatch => {
-        dispatch({ type: types.SHOW_COMMUNITY_LIST });
-    }
+  return dispatch => {
+    dispatch({ type: types.SHOW_COMMUNITY_LIST });
+  }
 };
 
 const hideCommunityList = () => {
-    return dispatch => {
-        dispatch({ type: types.HIDE_COMMUNITY_LIST });
-    }
+  return dispatch => {
+    dispatch({ type: types.HIDE_COMMUNITY_LIST });
+  }
 }
 
-const setLogin = (userId, token) => 
+const setLogin = (userId, token) =>
   dispatch => {
-    dispatch({ type: types.LOGIN_SUCCESS, userId, token,});
+    dispatch({ type: types.LOGIN_SUCCESS, userId, token, });
   }
 
 const autoLogin = () =>
@@ -50,6 +50,33 @@ const autoLogin = () =>
     }
   }
 
+const manualLogin = (credentials) =>
+  async dispatch => {
+    try {
+      dispatch({ type: types.LOGIN_START })
+      const response = await fetch(`${baseURL}/api/users/login`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+      if (response.status === 200) {
+        const token = JSON.parse(response._bodyText).token;
+        const userId = JSON.parse(response._bodyText).id;
+        await AsyncStorage.setItem('token', token);
+        await AsyncStorage.setItem('userId', `${userId}`);
+        dispatch({ type: types.LOGIN_SUCCESS, token, userId });
+      } else {
+        dispatch({ type: types.LOGIN_FAILED });
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: types.LOGIN_FAILED });
+    }
+  }
+
 const signupWithEmail = (user) => {
   return async dispatch => {
     try {
@@ -65,7 +92,6 @@ const signupWithEmail = (user) => {
       if (response.status === 201) {
         const token = JSON.parse(response._bodyText).token;
         const userId = JSON.parse(response._bodyText).id;
-        console.log(token, userId);
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('userId', `${userId}`);
         dispatch({ type: types.SIGNUP_EMAIL_SUCCESS, token, userId, })
@@ -78,13 +104,7 @@ const signupWithEmail = (user) => {
     }
   }
 }
-/*  This will be where the logout <i>action<i> takes place. 
-Can not be implemented and tested until I update with the MapViewHOC bug patch Tim made.
 
-const logout = () => {
+// TODO: Add logout
 
-}
-
-*/
-
-export { getGeoLocation, signupWithEmail, autoLogin, showCommunityList, hideCommunityList, setLogin };
+export { getGeoLocation, signupWithEmail, autoLogin, manualLogin, showCommunityList, hideCommunityList, setLogin };
