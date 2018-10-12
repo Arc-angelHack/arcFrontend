@@ -34,7 +34,7 @@ export default class SettingsCard extends React.Component {
       <View style={this.props.styles.container}>
         {this.props.settings.map((config, i) => {
           return (i === 0) ? (
-            <View>
+            <View key={i}>
               <TouchableOpacity style={this.props.styles.setting} onPress={() => this.navigateToSetting(config.title)}>
                 <Text style={this.props.styles.text__title}>{config.title}</Text>
                 <Text style={this.props.styles.text__value}>{config.value}</Text>
@@ -44,7 +44,7 @@ export default class SettingsCard extends React.Component {
               </View>
             </View>
           ) : (
-              <View>
+              <View key={i}>
                 <View style={this.props.styles.seperator__container}>
                   <View style={this.props.styles.seperator} />
                 </View>
