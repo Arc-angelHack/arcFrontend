@@ -1,12 +1,19 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import MedicalInfo from '../containers/MedicalInfo/components/MedicalInfo';
+import UserSummary from '../containers/UserSummary';
 
 export default class ProfileScreen extends React.PureComponent {
 
+  goToMedical = () => {
+    this.props.navigation.navigate('Medical')
+  }
+  goToPersonal = () => {
+    this.props.navigation.navigate('Personal')
+  }
+
   render() {
     return (
-      <MedicalInfo />
+      <UserSummary goToMedical={this.goToMedical} goToPersonal={this.goToPersonal} />
     );
   }
 }

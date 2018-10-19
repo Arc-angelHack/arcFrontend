@@ -8,7 +8,7 @@ import styles, { cardStyles } from './styles';
 //TODO: Hook up to API
 
 
-export class MedicalInfo extends React.PureComponent {
+export class MedicalInfo extends React.Component {
   userProfileConfig = [
     {
       title: 'Allergies & Reactions',
