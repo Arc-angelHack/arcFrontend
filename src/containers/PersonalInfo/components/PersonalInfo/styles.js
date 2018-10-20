@@ -19,6 +19,12 @@ export default styles = StyleSheet.create({
   trackStyle: {
     height: 15,
     width: 40,
+    borderRadius: 25,
+    opacity: 0.5,
+  },
+  offTrackStyle: {
+    height: 15,
+    width: 40,
     borderRadius: 25
   },
   text: {

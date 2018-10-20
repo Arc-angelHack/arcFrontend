@@ -21,7 +21,7 @@ export default class UserSummary extends React.Component {
         </View>
         <View style={styles.card}>
           <SettingsNavigatorCard
-            firstSetting="Current SOS Req"
+            firstSetting="Current SOS Request"
             secondSetting="Manage Community"
             navigateToFirstSetting={() => { }}
             navigateToSecondSetting={() => { }}
