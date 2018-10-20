@@ -11,6 +11,8 @@ import MapScreen from "./src/screens/MapScreen";
 import InformationScreen from './src/screens/InformationScreen';
 import CommunityScreen from './src/screens/CommunityScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import PersonalScreen from './src/screens/PersonalScreen';
+import MedicalScreen from './src/screens/MedicalScreen';
 import SOSScreen from './src/screens/SOSScreen';
 import IncidentReportScreen from './src/screens/IncidentReportScreen';
 import OfferScreen from './src/screens/OfferScreen';
@@ -113,6 +115,8 @@ const CommunityStack = createStackNavigator(
 const ProfileStack = createStackNavigator(
   {
     Profile: { screen: ProfileScreen },
+    Medical: { screen: MedicalScreen },
+    Personal: { screen: PersonalScreen },
   },
   {
     navigationOptions: {
