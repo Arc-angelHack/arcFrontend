@@ -39,6 +39,7 @@ export default class PersonalInfo extends React.Component {
   }
 
   render() {
+    const { sliderValue } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.userCard}>
@@ -51,12 +52,12 @@ export default class PersonalInfo extends React.Component {
           <Text style={styles.text}>Allow GPS</Text>
           <TouchableOpacity onPress={this.setSliderValue}>
             <Slider
-              value={this.state.sliderValue}
+              value={sliderValue}
               step={1}
-              trackStyle={styles.trackStyle}
+              trackStyle={sliderValue ? styles.trackStyle : styles.offTrackStyle}
               thumbStyle={styles.thumbStyle}
-              minimumTrackTintColor={'rgba(46, 6, 233, 0.4)'}
-              maximumTrackTintColor={'rgba(46, 6, 233, 0.4)'}
+              minimumTrackTintColor={'#2e06e9'}
+              maximumTrackTintColor={'#D3D3D3'}
             />
           </TouchableOpacity>
         </View>
