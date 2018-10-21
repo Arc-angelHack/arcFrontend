@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, AsyncStorage } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from "react-redux";
 import store from "./src/store.js";
@@ -22,6 +22,8 @@ import SignupWithEmailScreen from './src/screens/SignupWithEmail';
 import SignupScreen from './src/screens/Signup';
 import LoginScreen from './src/screens/Login';
 import AuthLoadingScreen from './src/screens/AuthLoadingScreen';
+import ManageCommunityOffersScreen from './src/screens/ManageCommunityOffersScreen';
+import ManageCommunityRequestsScreen from './src/screens/ManageCommunityRequestsScreen';
 
 const styles = StyleSheet.create({
   label: {
@@ -112,17 +114,47 @@ const CommunityStack = createStackNavigator(
   }
 );
 
+const ManageCommunity = createMaterialTopTabNavigator(
+  {
+    ManageOffers: { screen: ManageCommunityOffersScreen },
+    ManageRequests: { screen: ManageCommunityRequestsScreen },
+  }, {
+    initialRouteName: "ManageOffers",
+    navigationOptions: ({ navigation }) => ({
+      tabBarLabel: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        const name = (routeName === 'ManageOffers') ? 'My Offers' : 'My Requests';
+        return <Text style={{
+          color: '#1c1c1c',
+          fontFamily: 'Avenir-Medium',
+          fontSize: 18,
+          opacity: focused ? 1 : 0.5
+        }}>{name}</Text>;
+      }
+    }),
+    tabBarOptions: {
+      indicatorStyle: { backgroundColor: '#2e06e9' },
+      style: { backgroundColor: '#fff' },
+      labelStyle: { color: 'green' },
+      tabStyle: { color: 'red' }
+    }
+  }
+);
+
 const ProfileStack = createStackNavigator(
   {
     Profile: { screen: ProfileScreen },
+    ManageCommunity: { screen: ManageCommunity },
     Medical: { screen: MedicalScreen },
     Personal: { screen: PersonalScreen },
   },
   {
-    navigationOptions: {
-      title: "Profile",
-      headerTitleStyle,
-    },
+    navigationOptions: ({ navigation }) => (
+      {
+        headerTitle: (navigation.state.routeName === 'ManageCommunity') ? 'Manage Community' : 'Profile',
+        headerTitleStyle,
+      }
+    ),
   }
 )
 

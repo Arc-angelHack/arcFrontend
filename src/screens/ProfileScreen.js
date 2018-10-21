@@ -3,7 +3,9 @@ import { View, Text } from 'react-native';
 import UserSummary from '../containers/UserSummary';
 
 export default class ProfileScreen extends React.PureComponent {
-
+  goToManageCommunity = () => {
+    this.props.navigation.navigate('ManageCommunity')
+  }
   goToMedical = () => {
     this.props.navigation.navigate('Medical')
   }
@@ -13,7 +15,7 @@ export default class ProfileScreen extends React.PureComponent {
 
   render() {
     return (
-      <UserSummary goToMedical={this.goToMedical} goToPersonal={this.goToPersonal} />
+      <UserSummary goToMedical={this.goToMedical} goToPersonal={this.goToPersonal} goToManageCommunity={this.goToManageCommunity} />
     );
   }
 }
