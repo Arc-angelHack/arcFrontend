@@ -14,13 +14,16 @@ const getRequestsFailure = () => ({
   type: types.GET_ALL_REQUESTS_FAILED,
 });
 
-const getRequests = () =>
+const getRequests = (coords) =>
   async function (dispatch) {
     try {
       dispatch(getRequestsStart());
-      const response = await fetch(`${baseURL}/requests`);
-      const payload = JSON.parse(response._bodyText);
-      dispatch(getRequestsSuccess(payload.data))
+      const responseOffers = await fetch(`${baseURL}/api/resOffer?lat=${coords.latitude}&long=${coords.longitude}`);
+      const responseRequests = await fetch(`${baseURL}/api/resRequest?lat=${coords.latitude}&long=${coords.longitude}`)
+      const payloadOffers = JSON.parse(responseOffers._bodyText);
+      const payloadRequests = JSON.parse(responseRequests._bodyText);
+      const spreadData = [...payloadOffers.data, ...payloadRequests.data];
+      dispatch(getRequestsSuccess(spreadData));
     } catch (error) {
       dispatch(getRequestsFailure(error));
     }
