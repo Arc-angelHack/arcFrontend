@@ -15,8 +15,8 @@ export default function(state = initialState, action) {
         case types.GET_ALL_INCIDENTS_SUCCESS:
         const incidents = action.payload.map(incident => {
             return {
-                latitude: parseFloat(incident.latitude),
-                longitude: parseFloat(incident.longitude),
+                latitude: parseFloat(incident.lat),
+                longitude: parseFloat(incident.long),
                 description: incident.description,
                 timestamp: incident.created_at,
             }
@@ -37,10 +37,10 @@ export default function(state = initialState, action) {
             };
         case types.CREATE_INCIDENT_SUCCESS:
             const incident = {
-                latitude: parseFloat(action.payload.latitude),
-                longitude: parseFloat(action.payload.longitude),
-                description: action.payload.description,
-                timestamp: action.payload.created_at,
+                latitude: parseFloat(action.payload.data.lat),
+                longitude: parseFloat(action.payload.data.long),
+                description: action.payload.data.description,
+                timestamp: action.payload.data.created_at,
             };
             return {
                 ...state,

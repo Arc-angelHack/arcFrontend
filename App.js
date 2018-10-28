@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Provider } from "react-redux";
-import store from "./src/store.js";
-import { getGeoLocation, setLogin } from './src/actionCreators/app';
+import { Provider, connect } from "react-redux";
 import { getRequests } from './src/actionCreators/requests';
 import { getIncidents } from './src/actionCreators/incidents';
+import { getSos } from './src/actionCreators/sos';
 import MapScreen from "./src/screens/MapScreen";
 import InformationScreen from './src/screens/InformationScreen';
 import CommunityScreen from './src/screens/CommunityScreen';
@@ -175,14 +174,17 @@ const AppNavigator = createSwitchNavigator({
   }
 );
 
-export default class App extends Component {
-  componentDidMount = async () => {
-    store.dispatch(getGeoLocation());
-    store.dispatch(getRequests());
-    store.dispatch(getIncidents());
+class App extends Component {
+  componentWillReceiveProps = async (nextProps) => {
+    if (nextProps.coords !== null && this.props.coords === null) {
+      this.props.getRequests(nextProps.coords);
+      this.props.getIncidents(nextProps.coords);
+      this.props.getSos(nextProps.coords);
+    }
   };
 
   render() {
+    const { store } = this.props;
     return (
       <Provider store={store}>
         <AppNavigator />
@@ -190,3 +192,21 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  coords: state.app.coords,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getRequests: (coords) => {
+    dispatch(getRequests(coords));
+  },
+  getIncidents: (coords) => {
+    dispatch(getIncidents(coords));
+  },
+  getSos: (coords) => {
+    dispatch(getSos(coords));
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -14,11 +14,11 @@ const getIncidentsFailure = () => ({
   type: types.GET_ALL_INCIDENTS_FAILED,
 });
 
-const getIncidents = () =>
+const getIncidents = coords =>
   async function (dispatch) {
     try {
       dispatch(getIncidentsStart());
-      const response = await fetch(`${baseURL}/incidents`);
+      const response = await fetch(`${baseURL}/incidents?lat=${coords.latitude}&long=${coords.longitude}&range=20`);
       const payload = JSON.parse(response._bodyText);
       dispatch(getIncidentsSuccess(payload.data))
     } catch (error) {
@@ -43,13 +43,13 @@ const createIncident = (text, coords, userId, token) =>
   async function (dispatch) {
     try {
       const requestBody = {
-        latitude: `${coords.latitude}`,
-        longitude: `${coords.longitude}`,
+        lat: `${coords.latitude}`,
+        long: `${coords.longitude}`,
         description: text,
         user_id: userId,
       };
       dispatch(createIncidentStart());
-      const response = await fetch(`${baseURL}/api/${userId}/incidents`, {
+      const response = await fetch(`${baseURL}/incidents/byuser`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
@@ -57,10 +57,8 @@ const createIncident = (text, coords, userId, token) =>
         method: 'POST',
         body: JSON.stringify(requestBody)
       });
-      console.log(response);
       const payload = JSON.parse(response._bodyText);
-      console.log(payload);
-      dispatch(createIncidentSuccess(requestBody))
+      dispatch(createIncidentSuccess(payload));
     } catch (error) {
       dispatch(createIncidentFailure(error));
     }

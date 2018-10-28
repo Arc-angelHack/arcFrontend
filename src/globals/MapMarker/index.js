@@ -26,7 +26,7 @@ export default class MapMarker extends React.PureComponent {
         return (
             <Marker coordinate={this.props.latlng} image={icon} >
                 <Callout>
-                    <CustomCallout description={this.props.description} status={this.props.status} />
+                    <CustomCallout description={this.props.description} status={this.props.finished} />
                 </Callout>
             </Marker>
 
