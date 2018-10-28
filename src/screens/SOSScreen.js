@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { spreadMarkers } from '../utils/markerUtils';
-import { createRequest } from '../actionCreators/requests';
+import { createSos } from '../actionCreators/sos';
 import PageLayout from '../globals/PageLayout';
 import Soscontent from '../containers/Map/components/SosContent';
 
@@ -17,10 +17,11 @@ class SOSScreen extends React.PureComponent {
         text: '',
         showMap: false,
         coords: null,
+        locationData: null
     }
 
-    handleChangeText = text => {
-        this.setState({ text })
+    handleChangeText = (text, location) => {
+        this.setState({ text, locationData: location })
     }
 
     handlePressMap = () => {
@@ -33,9 +34,9 @@ class SOSScreen extends React.PureComponent {
 
     handleSubmit = () => {
         const { userId, token } = this.props;
-        const { text, coords } = this.state;
+        const { text, coords, locationData } = this.state;
         if (coords === null) return;
-        this.props.createNewSos(text, coords, userId, token);
+        this.props.createNewSos(text, coords, userId, token, locationData);
     };
 
     render() {
@@ -67,8 +68,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    createNewSos: (text, coords, userId, token) => {
-        dispatch(createRequest(text, coords, userId, token))
+    createNewSos: (text, coords, userId, token, locationData) => {
+        dispatch(createSos(text, coords, userId, token, locationData))
     },
 });
 

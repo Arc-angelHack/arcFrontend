@@ -1,5 +1,5 @@
-export const spreadMarkers = (requests, incidents) => {
-    const requestMarkers = requests.map(request => {
+export const spreadMarkers = (sosRequests, incidents) => {
+    const requestMarkers = sosRequests.map(request => {
         request.type = 'sos';
         request.latlng = {
             latitude: parseFloat(request.latitude),

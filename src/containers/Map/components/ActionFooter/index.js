@@ -11,7 +11,7 @@ export default class ActionFooter extends React.PureComponent {
     }
     componentWillReceiveProps = async nextProps => {
         const { initialCoords } = this.props;
-        if (initialCoords === null && nextProps.initialCoords !== null) {
+        if (!this.state.address && nextProps.initialCoords !== null) {
             this.setState({ address: await getCity(nextProps.initialCoords.latitude, nextProps.initialCoords.longitude)})
         }
     }

@@ -4,31 +4,40 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import getAddress from '../../../../utils/geocodeUtils/getAddress';
 import Avatar from '../../../../globals/Avatar';
 import styles from './styles'
+import Reactotron from 'reactotron-react-native';
 
 export default class SosContent extends React.PureComponent {
     state = {
-        address: '',
+        location: {
+            formattedAddress: '',
+            city: '',
+            state: '',
+            zip: '',
+            street: '',
+        },
     }
 
     componentWillMount = async () => {
         const { coords } = this.props;
-        this.setState({ address: await getAddress(coords.latitude, coords.longitude) })
+        this.setState({ location: await getAddress(coords.latitude, coords.longitude) })
     };
 
     render() {
+        const { location } = this.state;
+        Reactotron.log(location);
         return (
             <View style={styles.flex}>
                 <Avatar style={styles.avatar} />
                 <View style={styles.content}>
                     <Text style={styles.name}>Brian Admas</Text>
-                    <Text style={styles.textInput}>I need emergency help! My location is <Text style={styles.underline}>{this.state.address}</Text>.</Text>
+                    <Text style={styles.textInput}>I need emergency help! My location is <Text style={styles.underline}>{this.state.location.formattedAddress}</Text>.</Text>
                     <View style={styles.row}>
                         <Icon name="plus-circle" size={22} />
                         <Text style={styles.descriptionText}>Hold to speak</Text>
                     </View>
                     <View style={styles.row}>
                         <Icon name="plus-circle" size={22} />
-                        <TextInput multiline style={styles.descriptionText} onChangeText={text => this.props.handleChangeText(text)} placeholder="Add Description" />
+                        <TextInput multiline style={styles.descriptionText} onChangeText={text => this.props.handleChangeText(text, location)} placeholder="Add Description" />
                     </View>
                     <View style={styles.row}>
                         <Icon name="plus-circle" size={22} />

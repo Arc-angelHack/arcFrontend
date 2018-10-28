@@ -7,11 +7,16 @@ import styles from './styles'
 
 class Map extends React.PureComponent {
     render() {
-        const { coords, requests, incidents } = this.props;
-        const markers = spreadMarkers(requests, incidents);
+        const { coords, incidents, sosrequests } = this.props;
+        const markers = spreadMarkers(sosrequests, incidents);
         return (
             <View style={styles.flex}>
-                <MainMap incidentCount={incidents.length} markers={markers} initialCoords={coords} navigation={this.props.navigation} />
+                <MainMap 
+                    incidentCount={incidents.length} 
+                    markers={markers} 
+                    initialCoords={coords} 
+                    navigation={this.props.navigation} 
+                />
             </View>
         );
     }
@@ -19,7 +24,7 @@ class Map extends React.PureComponent {
 
 const mapStateToProps = state => ({
     coords: state.app.coords,
-    requests: state.requests.requests,
+    sosrequests: state.sos.sosrequests,
     incidents: state.incidents.incidents,
 })
 

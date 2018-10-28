@@ -1,7 +1,8 @@
 /** @format */
-
+import './src/ReactotronConfig';
 import {AppRegistry} from 'react-native';
-import App from './App';
+import AppHOC from './AppHOC';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => AppHOC);
+    

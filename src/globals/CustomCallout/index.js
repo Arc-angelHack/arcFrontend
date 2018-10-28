@@ -11,7 +11,7 @@ export default class CustomCallout extends React.PureComponent {
                     <Avatar callout />
                     <Text style={styles.header}>Brian Admas</Text>
                     <View style={styles.bar}>
-                        <Text style={styles.barText}>{this.props.status}</Text>
+                        <Text style={styles.barText}>{this.props.status ? 'In Progress' : 'Finished'}</Text>
                     </View>
                 </View>
                 <Text style={styles.paragraph}>
