@@ -12,7 +12,7 @@ export class AuthLoading extends React.Component {
   autoLogin = async () => {
     const token = await AsyncStorage.getItem('token');
     const userId = await AsyncStorage.getItem('userId');
-    console.log(token ,userId);
+    console.log(token, userId);
     if (token !== null) {
       this.props.setLogin(userId, token);
       this.props.handleNavigate('Tabs');
