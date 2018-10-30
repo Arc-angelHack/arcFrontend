@@ -6,26 +6,8 @@ import Avatar from '../../../globals/Avatar';
 import styles from './styles'
 
 export default class RequestContent extends React.PureComponent {
-    state = {
-        waterActive: false,
-        foodActive: false,
-        shelterActive: false,
-        medicalActive: false,
-        otherActive: false,
-    };
-
-    handleWater = () => this.setState({ waterActive: !this.state.waterActive });
-    
-    handleFood = () => this.setState({ foodActive: !this.state.foodActive });
-
-    handleShelter = () => this.setState({ shelterActive: !this.state.shelterActive });
-
-    handleMedical = () => this.setState({ medicalActive: !this.state.medicalActive });
-
-    handleOther = () => this.setState({ otherActive: !this.state.otherActive });
-
     render() {
-        const { waterActive, foodActive, shelterActive, medicalActive, otherActive } = this.state;
+        const { water, food, shelter, medical, other } = this.props;
         return (
             <View style={styles.flex}>
                 <Avatar style={styles.avatar} />
@@ -33,11 +15,11 @@ export default class RequestContent extends React.PureComponent {
                     <Text style={styles.name}>Brian Admas</Text>
                     <Text style={styles.textInput}>I need some help!</Text>
                     <View style={styles.actionRow}>
-                        <PinupCard type="water" active={waterActive} requestMode onPress={this.handleWater} />
-                        <PinupCard type="food" active={foodActive} requestMode onPress={this.handleFood} />
-                        <PinupCard type="shelter" active={shelterActive} requestMode onPress={this.handleShelter} />
-                        <PinupCard type="medical" active={medicalActive} requestMode onPress={this.handleMedical} />
-                        <PinupCard type="other" active={otherActive} requestMode onPress={this.handleOther} />
+                        <PinupCard type="water" active={water} requestMode onPress={this.props.handleWater} />
+                        <PinupCard type="food" active={food} requestMode onPress={this.props.handleFood} />
+                        <PinupCard type="shelter" active={shelter} requestMode onPress={this.props.handleShelter} />
+                        <PinupCard type="medical" active={medical} requestMode onPress={this.props.handleMedical} />
+                        <PinupCard type="other" active={other} requestMode onPress={this.props.handleOther} />
                     </View>
                     <View style={styles.row}>
                         <Icon name="plus-circle" size={22} />

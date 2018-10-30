@@ -15,14 +15,17 @@ export default function(state = initialState, action) {
         case types.GET_ALL_REQUESTS_SUCCESS:
             const requests = action.payload.map(request => {
                 return {
-                    latitude: parseFloat(request.latitude),
-                    longitude: parseFloat(request.longitude),
+                    latitude: parseFloat(request.lat),
+                    longitude: parseFloat(request.long),
                     description: request.description,
-                    status: 'In Progress',
-                    askFood: request.ask_food,
-                    askWater: request.ask_water,
-                    askMedical: request.ask_medical,
-                    askShelter: request.ask_shelter,
+                    peopleCount: request.people_count,
+                    askFood: request.food,
+                    askWater: request.water,
+                    askMedical: request.medical,
+                    askShelter: request.shelter,
+                    askOther: request.other,
+                    finished: request.finished,
+                    offer: request.is_an_offer,
                     timestamp: request.created_at,
                 }
             });
@@ -42,15 +45,16 @@ export default function(state = initialState, action) {
             };
         case types.CREATE_REQUEST_SUCCESS:
             const request = {
-                latitude: parseFloat(action.payload.request.latitude),
-                longitude: parseFloat(action.payload.request.longitude),
+                latitude: parseFloat(action.payload.request.lat),
+                longitude: parseFloat(action.payload.request.long),
                 description: action.payload.request.description,
-                status: 'In Progress',
+                finished: action.payload.request.finished,
                 askFood: action.payload.request.ask_food,
                 askWater: action.payload.request.ask_water,
                 askMedical: action.payload.request.ask_medical,
                 askShelter: action.payload.request.ask_shelter,
                 timestamp: action.payload.request.created_at,
+                offer: action.payload.request.is_an_offer,
             };
             return {
                 ...state,

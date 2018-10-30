@@ -14,13 +14,26 @@ const getRequestsFailure = () => ({
   type: types.GET_ALL_REQUESTS_FAILED,
 });
 
-const getRequests = () =>
+const getRequests = (coords, token) =>
   async function (dispatch) {
     try {
       dispatch(getRequestsStart());
-      const response = await fetch(`${baseURL}/requests`);
-      const payload = JSON.parse(response._bodyText);
-      dispatch(getRequestsSuccess(payload.data))
+      const responseOffers = await fetch(`${baseURL}/api/resOffer?lat=${coords.latitude}&long=${coords.longitude}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+      });
+      const responseRequests = await fetch(`${baseURL}/api/resRequest?lat=${coords.latitude}&long=${coords.longitude}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+      })
+      const payloadOffers = JSON.parse(responseOffers._bodyText);
+      const payloadRequests = JSON.parse(responseRequests._bodyText);
+      const spreadData = [...payloadOffers.data, ...payloadRequests.data];
+      dispatch(getRequestsSuccess(spreadData));
     } catch (error) {
       dispatch(getRequestsFailure(error));
     }
@@ -39,22 +52,24 @@ const createRequestFailure = () => ({
   type: types.CREATE_REQUEST_FAILED,
 });
 
-const createRequest = (text, coords, userId, token) =>
+const createRequest = (text, coords, userId, token, data) =>
   async function (dispatch) {
-    {/* TODO: Shouldn't have hardcoded userIds */ }
     try {
       const requestBody = {
-        latitude: `${coords.latitude}`,
-        longitude: `${coords.longitude}`,
+        lat: `${coords.latitude}`,
+        long: `${coords.longitude}`,
         description: text,
         user_id: userId,
-        ask_food: false,
-        ask_water: false,
-        ask_shelter: false,
-        ask_medical: false,
+        food: data.food,
+        water: data.water,
+        shelter: data.shelter,
+        medical: data.medical,
+        other: data.other,
+        people_count: data.peopleCount,
       };
       dispatch(createRequestStart());
-      const response = await fetch(`${baseURL}/api/${userId}/requests`, {
+      const url = data.type == 'offer' ? `${baseURL}/api/resOffer/create` : `${baseURL}/api/resRequest/create`;
+      const response = await fetch(url, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
@@ -63,8 +78,7 @@ const createRequest = (text, coords, userId, token) =>
         body: JSON.stringify(requestBody)
       });
       const payload = JSON.parse(response._bodyText);
-      console.log(payload);
-      dispatch(createRequestSuccess(payload))
+      dispatch(createRequestSuccess(payload));
     } catch (error) {
       dispatch(createRequestFailure(error));
     }

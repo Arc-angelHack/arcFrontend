@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { spreadMarkers } from '../utils/markerUtils';
-import { createIncident } from '../actionCreators/incidents';
+import { parseRequestMarkers } from '../utils/markerUtils';
+import { createRequest } from '../actionCreators/requests';
 import RequestContent from '../containers/Community/RequestContent';
 import PageLayout from '../globals/PageLayout';
 
@@ -17,6 +17,11 @@ class RequestScreen extends React.PureComponent {
         text: '',
         showMap: false,
         coords: null,
+        water: false,
+        food: false,
+        shelter: false,
+        other: false,
+        medical: false,
     }
 
     handleChangeText = text => {
@@ -31,17 +36,28 @@ class RequestScreen extends React.PureComponent {
         this.setState({ coords })
     }
 
+    handleWater = () => this.setState({ water: !this.state.water });
+    
+    handleFood = () => this.setState({ food: !this.state.food });
+
+    handleShelter = () => this.setState({ shelter: !this.state.shelter });
+
+    handleMedical = () => this.setState({ medical: !this.state.medical });
+
+    handleOther = () => this.setState({ other: !this.state.other });
+
     handleSubmit = () => {
         const { userId, token } = this.props;
-        const { text, coords } = this.state;
+        const { text, coords, water, food, shelter, other, medical } = this.state;
+        const data = { water, food, shelter, other, medical, type: 'request', peopleCount: 0 };
         if (coords === null) return;
-        this.props.createNewIncident(text, coords, userId, token);
+        this.props.createRequest(text, coords, userId, token, data);
     };
 
     render() {
         const { showMap } = this.state;
-        const { requests, incidents } = this.props;
-        const markers = spreadMarkers(requests, incidents);
+        const { requests } = this.props;
+        const markers = parseRequestMarkers(requests);
         return (
             <PageLayout
                 handleSubmit={this.handleSubmit} 
@@ -52,7 +68,16 @@ class RequestScreen extends React.PureComponent {
                 sendCoords={this.sendCoords}
                 navigation={this.props.navigation}
             >
-                <RequestContent handleChangeText={this.handleChangeText} coords={this.props.coords} />
+                <RequestContent 
+                    handleChangeText={this.handleChangeText} 
+                    coords={this.props.coords}
+                    handleWater={this.handleWater}
+                    handleFood={this.handleFood}
+                    handleMedical={this.handleMedical}
+                    handleOther={this.handleOther}
+                    handleShelter={this.handleShelter}
+                    {...this.state}
+                />
             </PageLayout>
         );
     }
@@ -63,12 +88,11 @@ const mapStateToProps = state => ({
     token: state.app.token,
     userId: state.app.userId,
     requests: state.requests.requests,
-    incidents: state.incidents.incidents,
 });
 
 const mapDispatchToProps = dispatch => ({
-    createNewIncident: (text, coords, userId, token) => {
-        dispatch(createIncident(text, coords, userId, token))
+    createRequest: (text, coords, userId, token, data) => {
+        dispatch(createRequest(text, coords, userId, token, data))
     },
 });
 
