@@ -17,3 +17,14 @@ export const spreadMarkers = (sosRequests, incidents) => {
     });
     return [...requestMarkers, ...incidentMarkers];
 };
+
+export const parseRequestMarkers = requests => {
+    const requestMarkers = requests.map(request => {
+        request.type = request.is_an_offer ? 'offer' : 'request';
+        request.latlng = {
+            latitude: parseFloat(request.latitude),
+            longitude: parseFloat(request.longitude)
+        };
+    });
+    return requestMarkers;
+}

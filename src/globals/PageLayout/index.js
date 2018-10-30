@@ -10,7 +10,7 @@ export default class PageLayout extends React.PureComponent {
         return (
             <View style={styles.container}>
                 {showMap 
-                    ? <MapViewHOC markers={markers} editMode sendCoords={this.props.sendCoords} initialCoords={coords} markers={[]} />
+                    ? <MapViewHOC markers={markers} editMode sendCoords={this.props.sendCoords} initialCoords={coords} />
                     : <EmptyMap handlePress={this.props.handlePressMap} />
                 }
                 <View style={styles.content}>

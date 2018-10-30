@@ -62,7 +62,7 @@ const createSos = (text, coords, userId, token, locationData) =>
         body: JSON.stringify(requestBody)
       });
       const payload = JSON.parse(response._bodyText);
-      dispatch(createSosSuccess(requestBody))
+      dispatch(createSosSuccess(payload['0']))
     } catch (error) {
       dispatch(createSosFailure(error));
     }

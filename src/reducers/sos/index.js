@@ -37,10 +37,11 @@ export default function(state = initialState, action) {
             };
         case types.CREATE_SOSREQUEST_SUCCESS:
             const sosrequest = {
-                latitude: parseFloat(action.payload.latitude),
-                longitude: parseFloat(action.payload.longitude),
+                latitude: parseFloat(action.payload.lat),
+                longitude: parseFloat(action.payload.long),
                 description: action.payload.description,
                 timestamp: action.payload.created_at,
+                finished: action.payload.finished,
             };
             return {
                 ...state,

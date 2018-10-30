@@ -15,7 +15,7 @@ export default class MapMarker extends React.PureComponent {
         switch (type) {
             case 'request':
                 return require('../../../assets/images/RequestPoint/RequestPoint.png');
-            case 'incident':
+            case 'offer':
                 return require('../../../assets/images/IncidentPoint/IncidentPoint.png');
         }
 

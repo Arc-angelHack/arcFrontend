@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import getAddress from '../../../../utils/geocodeUtils/getAddress';
 import Avatar from '../../../../globals/Avatar';
 import styles from './styles'
-import Reactotron from 'reactotron-react-native';
 
 export default class SosContent extends React.PureComponent {
     state = {
@@ -24,7 +23,6 @@ export default class SosContent extends React.PureComponent {
 
     render() {
         const { location } = this.state;
-        Reactotron.log(location);
         return (
             <View style={styles.flex}>
                 <Avatar style={styles.avatar} />

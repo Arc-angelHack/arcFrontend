@@ -79,8 +79,8 @@ class Community extends React.PureComponent {
                     incidents={incidents}
                     handleChangeRequestMode={this.handleChangeRequestMode}
                 />
-                {showList && <List {...this.state} cards={requestMode ? requests : incidents} />}
-                {!showList && <CommunityMap requestMode={requestMode} initialCoords={initialCoords} incidents={incidents} requests={requests} />}
+                {showList && <List {...this.state} requestMode={requestMode} cards={requests} />}
+                {!showList && <CommunityMap requestMode={requestMode} initialCoords={initialCoords} requests={requests} />}
                 <View style={[!showOpacity ? styles.bottomRow : styles.opacity]}>
                     <View style={showOpacity ? styles.opacityLayer : null}/>
                     {showOpacity && <OptionButton onPress={() => navigation.navigate('Offer')} color="#368ef4" communityMap offer showContext text="Offer Help" />}
@@ -95,7 +95,6 @@ class Community extends React.PureComponent {
 const mapStateToProps = state => ({
     initialCoords: state.app.coords,
     showList: state.app.showList,
-    incidents: state.incidents.incidents,
     requests: state.requests.requests,
 });
 

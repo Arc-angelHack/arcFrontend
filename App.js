@@ -208,8 +208,16 @@ const AppNavigator = createSwitchNavigator({
 
 class App extends Component {
   componentWillReceiveProps = async (nextProps) => {
-    if (nextProps.coords !== null && this.props.coords === null) {
-      this.props.getRequests(nextProps.coords);
+    if (nextProps.coords !== null && !this.props.coords) {
+      const token = await AsyncStorage.getItem('token');
+      if (token !== null) {
+        this.props.getRequests(nextProps.coords, token);
+        this.props.getIncidents(nextProps.coords);
+        this.props.getSos(nextProps.coords);
+      }
+    }
+    if (nextProps.token && !this.props.token && this.props.coords) {
+      this.props.getRequests(nextProps.coords, nextProps.token);
       this.props.getIncidents(nextProps.coords);
       this.props.getSos(nextProps.coords);
     }
@@ -227,11 +235,13 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   coords: state.app.coords,
+  userId: state.app.userId,
+  token: state.app.token,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getRequests: (coords) => {
-    dispatch(getRequests(coords));
+  getRequests: (coords, token) => {
+    dispatch(getRequests(coords, token));
   },
   getIncidents: (coords) => {
     dispatch(getIncidents(coords));

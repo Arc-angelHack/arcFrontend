@@ -6,9 +6,11 @@ import styles from './styles';
 
 export default class ActionHeader extends React.PureComponent {
     render() {
-        const { requestMode, handleChangeRequestMode, forNumber, handleChangeNumber, waterActive, foodActive, shelterActive, otherActive, medicalActive, requests, incidents } = this.props;
+        const { requestMode, handleChangeRequestMode, forNumber, handleChangeNumber, waterActive, foodActive, shelterActive, otherActive, medicalActive, requests } = this.props;
         const requestOptions = ['Request', 'Offer'];
-        const numberOptions = ['For 1','For 2','For 3','For 4','For 5','For 6','For 7','For 8','For 9']
+        const numberOptions = ['For 1','For 2','For 3','For 4','For 5','For 6','For 7','For 8','For 9'];
+        const numOfRequests = requestMode ? requests.filter(request => !request.is_an_offer) : 0;
+        const numOfOffers = requestMode ? 0 : requests.filter(request => request.is_an_offer)
         return (
             <View style={styles.container}>
                 <View style={styles.topRow}>
@@ -30,7 +32,9 @@ export default class ActionHeader extends React.PureComponent {
                             forNumber={forNumber}
                         />
                     </View>
-                    <Text style={[styles.text, requestMode ? styles.requestButtonTextAltColor : styles.offerTextAltColor]}>{requestMode ? requests.length : incidents.length} people {requestMode ? 'need' : 'offer to'} help</Text>
+                    <Text style={[styles.text, requestMode ? styles.requestButtonTextAltColor : styles.offerTextAltColor]}>
+                        {requestMode ? numOfRequests.length : numOfOffers.length} people {requestMode ? 'need' : 'offer to'} help
+                    </Text>
                 </View>
                 <View style={[styles.row, styles.secondRow]}>
                     <PinupCard type="water" active={waterActive} requestMode={requestMode} onPress={this.props.handleChangePinup} />
