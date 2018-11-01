@@ -108,7 +108,10 @@ const signupWithEmail = (user) => {
 }
 
 const logout = () => {
-
+  return async dispatch => {
+    await AsyncStorage.removeItem('token');
+    dispatch({ type: types.LOGOUT });
+  }
 }
 
-export { getGeoLocation, signupWithEmail, autoLogin, manualLogin, showCommunityList, hideCommunityList, setLogin };
+export { getGeoLocation, signupWithEmail, autoLogin, manualLogin, showCommunityList, hideCommunityList, setLogin, logout };

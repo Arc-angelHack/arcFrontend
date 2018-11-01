@@ -14,9 +14,7 @@ export const LOGIN_START = 'app/LOGIN_START';
 export const LOGIN_SUCCESS = 'app/LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'app/LOGIN_FAILED';
 
-export const LOGOUT_START = 'app/LOGOUT_START';
-export const LOGOUT_SUCCESS = 'app/LOGOUT_SUCCESS';
-export const LOGOUT_FAILED = 'app/LOGOUT_FAILED';
+export const LOGOUT = 'app/LOGOUT';
 
 /* Facebook, Google, Twitter will go here 
 

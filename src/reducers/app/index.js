@@ -48,6 +48,8 @@ export default function (state = initialState, action) {
         isLoading: false,
         loggedIn: false
       };
+    case types.LOGOUT:
+      return initialState;
     case types.SIGNUP_EMAIL_START:
       return {
         ...state,
@@ -69,13 +71,13 @@ export default function (state = initialState, action) {
       };
     case types.SHOW_COMMUNITY_LIST:
       return {
-          ...state,
-          showList: true,
+        ...state,
+        showList: true,
       }
-  case types.HIDE_COMMUNITY_LIST:
+    case types.HIDE_COMMUNITY_LIST:
       return {
-          ...state,
-          showList: false,
+        ...state,
+        showList: false,
       }
     default:
       return state
