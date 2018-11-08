@@ -7,7 +7,16 @@ const initialState = {
   showList: true,
   loggedIn: false,
   token: null,
-  userId: null
+  userId: null,
+  edit: false,
+  medicalSettings: {
+    blood_type: '',
+    medication: '',
+    insurance: '',
+    allergies: '',
+    emergency_name: '',
+    emergency_phone: ''
+  }
 };
 
 export default function (state = initialState, action) {
@@ -69,6 +78,21 @@ export default function (state = initialState, action) {
         isLoading: false,
         loggedIn: false
       };
+    case types.MEDICAL_SETTINGS_GET_START:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case types.MEDICAL_SETTINGS_GET_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        medicalSettings: action.data
+      };
+    case types.MEDICAL_SETTINGS_GET_FAILED:
+      return {
+        ...state,
+      };
     case types.SHOW_COMMUNITY_LIST:
       return {
         ...state,
@@ -78,6 +102,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         showList: false,
+      }
+    case types.EDIT_START:
+      return {
+        ...state,
+        edit: true,
+      }
+    case types.EDIT_END:
+      return {
+        ...state,
+        edit: false,
       }
     default:
       return state

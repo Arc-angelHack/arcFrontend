@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 import SettingsCard from '../../../../globals/SettingsCard';
+import { getPersonalSettings, getMedicalSettings } from '../../../../actionCreators/app';
 import UserInfo from '../../../../globals/UserInfo';
 import styles, { cardStyles } from './styles';
 
@@ -9,35 +11,81 @@ import styles, { cardStyles } from './styles';
 
 
 export class MedicalInfo extends React.Component {
-  userProfileConfig = [
+  constructor(props) {
+    super(props)
+    this.createSettingsArrays(this.props.medical);
+  }
+
+  createSettingsArrays = async (settings) => {
+    await this.props.getMedicalSettings();
+  }
+
+  updateSettings = (settings) => {
+    const {
+      ['Allergies & Reactions']: allergies,
+      ['Blood Type']: blood_type,
+      ['Medication']: medication,
+      ['Insurance']: insurance,
+      ['Emergency Contact']: emergency_name,
+      ['Phone']: emergency_phone
+    } = settings;
+    const unfilteredSettings = {
+      allergies,
+      blood_type,
+      medication,
+      insurance,
+      emergency_name,
+      emergency_phone
+    }
+    let payload = {}
+    for (let setting in unfilteredSettings) {
+      if (unfilteredSettings[setting] !== undefined) {
+        payload[setting] = unfilteredSettings[setting]
+      }
+    }
+    // the fun async stuff will go here later
+  }
+
+  /*
+    {
+      "blood_type":"",
+      "allergies":"",
+      "medication":"",
+      "insurance":"",
+      "emergency_name":"",
+      "emergency_phone":""
+    }
+  */
+
+  medical = [
     {
       title: 'Allergies & Reactions',
-      value: 'Peniciplin -  hives, rash and itching'
+      value: this.props.settings.allergies
     },
     {
       title: 'Blood Type',
-      value: 'AB -'
+      value: this.props.settings.blood_type
     },
     {
       title: 'Medication',
-      value: 'Metformin'
+      value: this.props.settings.medication
     },
     {
       title: 'Insurance',
-      value: 'Medicare - 1EG4-TE5-MK72'
+      value: this.props.settings.insurance
     },
   ]
-
-  userContactConfig = [
+  contact = [
     {
       title: 'Emergency Contact',
-      value: 'Charles Adams'
+      value: this.props.settings.emergency_name
     },
     {
       title: 'Phone',
-      value: '415-205-7858'
+      value: this.props.settings.emergency_phone
     },
   ]
+
 
   render() {
     return (
@@ -46,16 +94,23 @@ export class MedicalInfo extends React.Component {
           <UserInfo />
         </View>
         <View style={styles.card}>
-          <SettingsCard styles={cardStyles} settings={this.userProfileConfig} />
+          <SettingsCard styles={cardStyles} settings={this.medical} update={this.updateSettings} />
         </View>
         <View style={styles.card}>
-          <SettingsCard styles={cardStyles} settings={this.userContactConfig} />
+          <SettingsCard styles={cardStyles} settings={this.contact} />
         </View>
       </View>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  settings: state.app.medicalSettings
+})
 
+const mapDispatchToProps = dispatch => ({
+  getPersonalSettings: () => dispatch(getPersonalSettings()),
+  getMedicalSettings: () => dispatch(getMedicalSettings()),
+})
 
-export default MedicalInfo
+export default connect(mapStateToProps, mapDispatchToProps)(MedicalInfo)

@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Slider from 'react-native-slider';
+import { connect } from 'react-redux';
 import SettingsCard from '../../../../globals/SettingsCard';
+import { getPersonalSettings, getMedicalSettings } from '../../../../actionCreators/app';
 import UserInfo from '../../../../globals/UserInfo';
 import styles, { cardStyles } from './styles';
 
@@ -9,10 +11,32 @@ import styles, { cardStyles } from './styles';
 //TODO: Hook up to API
 
 
-export default class PersonalInfo extends React.Component {
+export class PersonalInfo extends React.Component {
   state = {
     sliderValue: 0
   };
+
+  constructor(props) {
+    super(props)
+    this.getPersonalSettings();
+  }
+
+  getPersonalSettings = async () => {
+    //await this.props.getPersonalSettings();
+    await this.props.getMedicalSettings();
+  }
+
+  /*
+  {
+    blood_type: '',
+    medication: '',
+    insurance: '',
+    allergies: '',
+    emergency_name: '',
+    emergency_phone: ''
+  }
+  */
+
   userPersonalConfig = [
     {
       title: 'Date of birth',
@@ -68,3 +92,9 @@ export default class PersonalInfo extends React.Component {
 
 
 
+const mapDispatchToProps = dispatch => ({
+  getPersonalSettings: () => dispatch(getPersonalSettings()),
+  getMedicalSettings: () => dispatch(getMedicalSettings()),
+})
+
+export default connect(undefined, mapDispatchToProps)(PersonalInfo)

@@ -42,6 +42,8 @@ export const cardStyles = StyleSheet.create({
   text__value: {
     fontFamily: 'SourceSansPro-Regular',
     fontSize: 16,
-    color: '#1c1c1c'
+    color: '#1c1c1c',
+    paddingBottom: 0,
+    paddingTop: 0,
   }
 })

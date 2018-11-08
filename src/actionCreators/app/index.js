@@ -114,4 +114,142 @@ const logout = () => {
   }
 }
 
-export { getGeoLocation, signupWithEmail, autoLogin, manualLogin, showCommunityList, hideCommunityList, setLogin, logout };
+//Medical
+const createMedicalSettings = () => {
+  return async dispatch => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await fetch(`${baseURL}profile/medical/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          blood_type: '',
+          allergies: '',
+          medication: '',
+          insurance: '',
+          emergency_name: '',
+          emergency_phone: ''
+        })
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+const getMedicalSettings = () => {
+  return async dispatch => {
+    dispatch({ type: types.MEDICAL_SETTINGS_GET_START })
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await fetch(`${baseURL}profile/medical/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      const settings = JSON.parse(response._bodyText)
+      if (Object.keys(settings).length === 0 && settings.constructor === Object) {
+        dispatch({ type: types.MEDICAL_SETTINGS_GET_FAILED })
+        console.log('Initiating default medical settings');
+        dispatch(createMedicalSettings());
+      }
+      console.log(settings.data);
+      const { data } = settings;
+      dispatch({ type: types.MEDICAL_SETTINGS_GET_SUCCESS, data })
+    } catch (error) {
+      dispatch({ type: types.MEDICAL_SETTINGS_GET_FAILED })
+      console.log(error);
+    }
+  }
+}
+
+const updateMedicalSettings = () => {
+
+}
+
+// PERSONAL
+
+const createPersonalSettings = () => {
+  return async dispatch => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await fetch(`${baseURL}profile/personal/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          birth_date: '',
+          city: '',
+          state: '',
+          phone: '',
+          gps: false,
+        })
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+const getPersonalSettings = () => {
+  return async dispatch => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await fetch(`${baseURL}profile/personal/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      console.log(response)
+      const settings = JSON.parse(response._bodyText)
+      if (Object.keys(settings).length === 0 && settings.constructor === Object) {
+        console.log('Initiating default personal settings');
+        dispatch(createPersonalSettings());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+const startEdit = () => {
+  return async dispatch => {
+    dispatch({ type: types.EDIT_START });
+  }
+}
+
+const endEdit = () => {
+  return async dispatch => {
+    dispatch({ type: types.EDIT_END });
+  }
+}
+
+export {
+  getGeoLocation,
+  signupWithEmail,
+  autoLogin,
+  manualLogin,
+  showCommunityList,
+  hideCommunityList,
+  setLogin,
+  logout,
+  getPersonalSettings,
+  getMedicalSettings,
+  startEdit,
+  endEdit
+};
