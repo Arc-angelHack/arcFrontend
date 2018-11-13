@@ -93,6 +93,24 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
+    case types.MEDICAL_SETTINGS_PATCH_START:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case types.MEDICAL_SETTINGS_PATCH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        medicalSettings: {
+          ...state.medicalSettings,
+          ...action.data
+        }
+      };
+    case types.MEDICAL_SETTINGS_PATCH_FAILED:
+      return {
+        ...state,
+      };
     case types.SHOW_COMMUNITY_LIST:
       return {
         ...state,

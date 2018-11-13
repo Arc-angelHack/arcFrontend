@@ -26,28 +26,58 @@ import styles from './styles';
 export class SettingsCard extends React.Component {
   constructor(props) {
     super(props)
+    this.state = { settings: {} }
+    this.props.settings.map(configObject => {
+      this.state.settings[configObject.title] = configObject.value
+    })
+    console.log('Settings Card Constructed.')
+  }
 
+  loadData = () => {
+    console.log('Settings Card gonna load the Array')
+    const settings = {};
+    this.props.settings.map(configObject => {
+      settings[configObject.title] = configObject.value
+    });
+    this.setState(() => ({ settings }))
   }
 
   handleTextChange = (title, text) => {
-    this.setState((prevState) => ({
-      settings: {
-        ...prevState.settings,
-        [title]: text
+    this.setState((prevState) => {
+      if (prevState) {
+        return ({
+          settings: {
+            ...prevState.settings,
+            [title]: text
+          }
+        })
       }
-    }))
+    })
   }
   refHolder = {}
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.edit === false && this.props.edit === true) {
-      this.update(this.state.settings);
+  renderNewSettings = (incomingSettings, currentSettings) => {
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('update')
+    if (this.props.settings !== prevProps.settings) {
+      this.loadData();
+      // times when updates happen:
+      //parent fetches last data from server:
+      //this component actually renders new text
+      //parent posts and returns new data from server:
+    }
+    if (prevProps.edit === true && this.props.edit === false) {
+      this.props.update(this.state.settings);
     }
   }
 
   navigateToSetting = (setting) => { }
 
   render() {
+    console.log('rendering, ', this.state.settings)
     return (
       <View style={this.props.styles.container}>
         {this.props.settings.map((config, i) => {
@@ -56,13 +86,13 @@ export class SettingsCard extends React.Component {
               <TouchableOpacity style={this.props.styles.setting} onPress={() => { if (this.props.edit) { this.refHolder[config.title].focus() } }}>
                 <Text style={this.props.styles.text__title}>{config.title}</Text>
                 <TextInput
-                  ref={(input) => { this.refHolder[config.title] = input }}
+                  // ref={(input) => { this.refHolder[config.title] = input }}
                   style={this.props.styles.text__value}
                   underlineColorAndroid='transparent'
                   onChangeText={text => this.handleTextChange(config.title, text)}
-                  editable={!!this.props.edit}>
-                  {config.value}
-                </TextInput>
+                  editable={!!this.props.edit}
+                  maxLength={10}
+                  value={this.state.settings[config.title]} />
               </TouchableOpacity>
               <View style={this.props.styles.seperator__container}>
                 <View style={this.props.styles.seperator} />
@@ -80,9 +110,8 @@ export class SettingsCard extends React.Component {
                     style={this.props.styles.text__value}
                     underlineColorAndroid='transparent'
                     onChangeText={text => this.handleTextChange(config.title, text)}
-                    editable={!!this.props.edit}>
-                    {config.value}
-                  </TextInput>
+                    editable={!!this.props.edit}
+                    value={this.state.settings[config.title]} />
                 </TouchableOpacity>
               </View>
             )

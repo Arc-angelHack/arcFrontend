@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import SettingsCard from '../../../../globals/SettingsCard';
-import { getPersonalSettings, getMedicalSettings } from '../../../../actionCreators/app';
+import { getPersonalSettings, getMedicalSettings, updateMedicalSettings } from '../../../../actionCreators/app';
 import UserInfo from '../../../../globals/UserInfo';
 import styles, { cardStyles } from './styles';
 
@@ -11,16 +11,82 @@ import styles, { cardStyles } from './styles';
 
 
 export class MedicalInfo extends React.Component {
+  state = {
+    medical: [
+      {
+        title: 'Allergies & Reactions',
+        value: this.props.settings.allergies
+      },
+      {
+        title: 'Blood Type',
+        value: this.props.settings.blood_type
+      },
+      {
+        title: 'Medication',
+        value: this.props.settings.medication
+      },
+      {
+        title: 'Insurance',
+        value: this.props.settings.insurance
+      },
+    ],
+    contact: [
+      {
+        title: 'Emergency Contact',
+        value: this.props.settings.emergency_name
+      },
+      {
+        title: 'Phone',
+        value: this.props.settings.emergency_phone
+      },
+    ]
+  }
   constructor(props) {
     super(props)
-    this.createSettingsArrays(this.props.medical);
   }
 
-  createSettingsArrays = async (settings) => {
-    await this.props.getMedicalSettings();
+  componentDidUpdate(prevProps) {
+    if (this.props.settings !== prevProps.settings) {
+      console.log('MedicalInfo got settings from redux');
+      // console.log(this.state.medical)
+      console.log(this.props.settings.allergies);
+      // console.log(prevProps.settings);
+      console.log('Medical Info gonna set state')
+      this.setState((prevProps) => {
+        return {
+          medical: [
+            {
+              title: 'Allergies & Reactions',
+              value: this.props.settings.allergies
+            },
+            {
+              title: 'Blood Type',
+              value: this.props.settings.blood_type
+            },
+            {
+              title: 'Medication',
+              value: this.props.settings.medication
+            },
+            {
+              title: 'Insurance',
+              value: this.props.settings.insurance
+            },
+          ],
+          contact: [
+            {
+              title: 'Emergency Contact',
+              value: this.props.settings.emergency_name
+            },
+            {
+              title: 'Phone',
+              value: this.props.settings.emergency_phone
+            },
+          ]
+        }
+      })
+    }
   }
-
-  updateSettings = (settings) => {
+  updateSettings = async (settings) => {
     const {
       ['Allergies & Reactions']: allergies,
       ['Blood Type']: blood_type,
@@ -43,48 +109,10 @@ export class MedicalInfo extends React.Component {
         payload[setting] = unfilteredSettings[setting]
       }
     }
-    // the fun async stuff will go here later
+    await this.props.updateMedicalSettings(payload)
   }
 
-  /*
-    {
-      "blood_type":"",
-      "allergies":"",
-      "medication":"",
-      "insurance":"",
-      "emergency_name":"",
-      "emergency_phone":""
-    }
-  */
 
-  medical = [
-    {
-      title: 'Allergies & Reactions',
-      value: this.props.settings.allergies
-    },
-    {
-      title: 'Blood Type',
-      value: this.props.settings.blood_type
-    },
-    {
-      title: 'Medication',
-      value: this.props.settings.medication
-    },
-    {
-      title: 'Insurance',
-      value: this.props.settings.insurance
-    },
-  ]
-  contact = [
-    {
-      title: 'Emergency Contact',
-      value: this.props.settings.emergency_name
-    },
-    {
-      title: 'Phone',
-      value: this.props.settings.emergency_phone
-    },
-  ]
 
 
   render() {
@@ -94,10 +122,10 @@ export class MedicalInfo extends React.Component {
           <UserInfo />
         </View>
         <View style={styles.card}>
-          <SettingsCard styles={cardStyles} settings={this.medical} update={this.updateSettings} />
+          <SettingsCard styles={cardStyles} settings={this.state.medical} update={this.updateSettings} />
         </View>
         <View style={styles.card}>
-          <SettingsCard styles={cardStyles} settings={this.contact} />
+          {/* <SettingsCard styles={cardStyles} settings={this.state.contact} update={this.updateSettings} /> */}
         </View>
       </View>
     );
@@ -111,6 +139,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getPersonalSettings: () => dispatch(getPersonalSettings()),
   getMedicalSettings: () => dispatch(getMedicalSettings()),
+  updateMedicalSettings: (payload) => dispatch(updateMedicalSettings(payload))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicalInfo)

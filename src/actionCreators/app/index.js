@@ -161,7 +161,6 @@ const getMedicalSettings = () => {
         console.log('Initiating default medical settings');
         dispatch(createMedicalSettings());
       }
-      console.log(settings.data);
       const { data } = settings;
       dispatch({ type: types.MEDICAL_SETTINGS_GET_SUCCESS, data })
     } catch (error) {
@@ -171,8 +170,33 @@ const getMedicalSettings = () => {
   }
 }
 
-const updateMedicalSettings = () => {
-
+const updateMedicalSettings = (payload) => {
+  return async dispatch => {
+    try {
+      dispatch({ type: types.MEDICAL_SETTINGS_PATCH_START });
+      if (Object.keys(payload).length === 0 && payload.constructor === Object) {
+        dispatch({ type: types.MEDICAL_SETTINGS_PATCH_FAILED });
+        return;
+      }
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await fetch(`${baseURL}profile/medical/${userId}/update`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(payload)
+      });
+      const settings = JSON.parse(response._bodyText)
+      const { data } = settings;
+      console.log('response', response);
+      dispatch({ type: types.MEDICAL_SETTINGS_PATCH_SUCCESS, data: data[0] })
+    } catch (error) {
+      dispatch({ type: types.MEDICAL_SETTINGS_PATCH_FAILED })
+      console.log(error);
+    }
+  }
 }
 
 // PERSONAL
@@ -250,6 +274,7 @@ export {
   logout,
   getPersonalSettings,
   getMedicalSettings,
+  updateMedicalSettings,
   startEdit,
   endEdit
 };
