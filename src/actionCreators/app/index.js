@@ -217,7 +217,7 @@ const createPersonalSettings = () => {
           city: '',
           state: '',
           phone: '',
-          gps: false,
+          gps: '',
         })
       });
       console.log(response);
@@ -229,27 +229,61 @@ const createPersonalSettings = () => {
 
 const getPersonalSettings = () => {
   return async dispatch => {
+    dispatch({ type: types.PERSONAL_SETTINGS_GET_START })
     try {
       const token = await AsyncStorage.getItem('token');
       const userId = await AsyncStorage.getItem('userId');
-      const response = await fetch(`${baseURL}profile/personal/${userId}`, {
+      const response = await fetch(`${baseURL}profile/medical/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
         }
       });
-      console.log(response)
       const settings = JSON.parse(response._bodyText)
       if (Object.keys(settings).length === 0 && settings.constructor === Object) {
-        console.log('Initiating default personal settings');
-        dispatch(createPersonalSettings());
+        dispatch({ type: types.PERSONAL_SETTINGS_GET_FAILED })
+        console.log('Initiating default medical settings');
+        dispatch(createMedicalSettings());
       }
+      const { data } = settings;
+      dispatch({ type: types.PERSONAL_SETTINGS_GET_SUCCESS, data })
     } catch (error) {
+      dispatch({ type: types.PERSONAL_SETTINGS_GET_FAILED })
       console.log(error);
     }
   }
 }
+
+const updatePersonalSettings = (payload) => {
+  return async dispatch => {
+    try {
+      dispatch({ type: types.PERSONAL_SETTINGS_PATCH_START });
+      if (Object.keys(payload).length === 0 && payload.constructor === Object) {
+        dispatch({ type: types.PERSONAL_SETTINGS_PATCH_FAILED });
+        return;
+      }
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await fetch(`${baseURL}profile/personal/${userId}/update`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(payload)
+      });
+      const settings = JSON.parse(response._bodyText)
+      const { data } = settings;
+      console.log('response', response);
+      dispatch({ type: types.PERSONAL_SETTINGS_PATCH_SUCCESS, data: data[0] })
+    } catch (error) {
+      dispatch({ type: types.PERSONAL_SETTINGS_PATCH_FAILED })
+      console.log(error);
+    }
+  }
+}
+
 
 const startEdit = () => {
   return async dispatch => {
@@ -273,6 +307,7 @@ export {
   setLogin,
   logout,
   getPersonalSettings,
+  updatePersonalSettings,
   getMedicalSettings,
   updateMedicalSettings,
   startEdit,

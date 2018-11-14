@@ -27,8 +27,6 @@ export const cardStyles = StyleSheet.create({
     width: 360
   },
   setting: {
-    flexDirection: "column",
-    alignItems: "flex-start",
     justifyContent: 'space-between',
     marginLeft: 28,
     marginBottom: 8,

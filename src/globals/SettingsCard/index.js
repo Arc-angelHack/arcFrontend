@@ -86,12 +86,11 @@ export class SettingsCard extends React.Component {
               <TouchableOpacity style={this.props.styles.setting} onPress={() => { if (this.props.edit) { this.refHolder[config.title].focus() } }}>
                 <Text style={this.props.styles.text__title}>{config.title}</Text>
                 <TextInput
-                  // ref={(input) => { this.refHolder[config.title] = input }}
+                  ref={(input) => { this.refHolder[config.title] = input }}
                   style={this.props.styles.text__value}
                   underlineColorAndroid='transparent'
                   onChangeText={text => this.handleTextChange(config.title, text)}
                   editable={!!this.props.edit}
-                  maxLength={10}
                   value={this.state.settings[config.title]} />
               </TouchableOpacity>
               <View style={this.props.styles.seperator__container}>

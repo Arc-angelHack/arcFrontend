@@ -111,6 +111,39 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
+    case types.PERSONAL_SETTINGS_GET_START:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case types.PERSONAL_SETTINGS_GET_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        personalSettings: action.data
+      };
+    case types.PERSONAL_SETTINGS_GET_FAILED:
+      return {
+        ...state,
+      };
+    case types.PERSONAL_SETTINGS_PATCH_START:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case types.PERSONAL_SETTINGS_PATCH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        personalSettings: {
+          ...state.personalSettings,
+          ...action.data
+        }
+      };
+    case types.PERSONAL_SETTINGS_PATCH_FAILED:
+      return {
+        ...state,
+      };
     case types.SHOW_COMMUNITY_LIST:
       return {
         ...state,

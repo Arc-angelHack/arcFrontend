@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { getPersonalSettings, getMedicalSettings, startEdit, endEdit } from '../../actionCreators/app';
+import { startEdit, endEdit } from '../../actionCreators/app';
 import styles from './styles'
 
 class Edit extends React.Component {
@@ -27,8 +27,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getPersonalSettings: () => dispatch(getPersonalSettings()),
-  getMedicalSettings: () => dispatch(getMedicalSettings()),
   startEdit: () => dispatch(startEdit()),
   endEdit: () => dispatch(endEdit())
 })

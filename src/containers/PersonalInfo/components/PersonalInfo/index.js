@@ -1,31 +1,102 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Slider from 'react-native-slider';
 import { connect } from 'react-redux';
+import Slider from 'react-native-slider';
 import SettingsCard from '../../../../globals/SettingsCard';
-import { getPersonalSettings, getMedicalSettings } from '../../../../actionCreators/app';
+import { getPersonalSettings, updatePersonalSettings } from '../../../../actionCreators/app';
 import UserInfo from '../../../../globals/UserInfo';
 import styles, { cardStyles } from './styles';
 
 
 //TODO: Hook up to API
+/*
+{
+          birth_date: '',
+          city: '',
+          state: '',
+          phone: '',
+          gps: '',
+        }
+*/
+
 
 
 export class PersonalInfo extends React.Component {
   state = {
-    sliderValue: 0
+    sliderValue: (this.props.settings.gps === undefined ? 0 : 1),
+    personal: [
+      {
+        title: 'Date of birth',
+        value: this.props.settings.birth_date
+      },
+      {
+        title: 'Home City ',
+        value: this.props.settings.city
+      },
+      {
+        title: 'Phone',
+        value: this.props.settings.phone
+      },
+      {
+        title: 'Email',
+        value: 'brianadamas@gmail.com'
+      }
+    ]
   };
 
   constructor(props) {
     super(props)
-    this.getPersonalSettings();
   }
 
-  getPersonalSettings = async () => {
-    //await this.props.getPersonalSettings();
-    await this.props.getMedicalSettings();
+  componentDidUpdate(prevProps) {
+    if (this.props.settings !== prevProps.settings) {
+      console.log('Personal Info got settings from redux');
+      console.log(this.props.settings.birth_date);
+      console.log('Personal Info gonna set state')
+      this.setState((prevProps) => {
+        return {
+          personal: [
+            {
+              title: 'Date of birth',
+              value: this.props.settings.birth_date
+            },
+            {
+              title: 'Home City',
+              value: this.props.settings.city
+            },
+            {
+              title: 'Phone',
+              value: this.props.settings.phone
+            },
+            {
+              title: 'Email',
+              value: 'brianadamas@gmail.com'
+            }
+          ]
+        }
+      })
+    }
   }
 
+  updateSettings = async (settings) => {
+    const {
+      ['Date of birth']: birth_date,
+      ['Home City']: city,
+      ['Phone']: phone,
+    } = settings;
+    const unfilteredSettings = {
+      birth_date,
+      city,
+      phone
+    }
+    let payload = {}
+    for (let setting in unfilteredSettings) {
+      if (unfilteredSettings[setting] !== undefined) {
+        payload[setting] = unfilteredSettings[setting]
+      }
+    }
+    await this.props.updatePersonalSettings(payload)
+  }
   /*
   {
     blood_type: '',
@@ -70,7 +141,7 @@ export class PersonalInfo extends React.Component {
           <UserInfo />
         </View>
         <View style={styles.card}>
-          <SettingsCard styles={cardStyles} settings={this.userPersonalConfig} />
+          <SettingsCard styles={cardStyles} settings={this.state.personal} update={this.updateSettings} />
         </View>
         <View style={styles.card}>
           <Text style={styles.text}>Allow GPS</Text>
@@ -91,10 +162,13 @@ export class PersonalInfo extends React.Component {
 }
 
 
+const mapStateToProps = state => ({
+  settings: state.app.personalSettings
+})
 
 const mapDispatchToProps = dispatch => ({
   getPersonalSettings: () => dispatch(getPersonalSettings()),
-  getMedicalSettings: () => dispatch(getMedicalSettings()),
+  updatePersonalSettings: (payload) => dispatch(updatePersonalSettings(payload))
 })
 
-export default connect(undefined, mapDispatchToProps)(PersonalInfo)
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalInfo)

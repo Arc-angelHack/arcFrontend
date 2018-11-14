@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import SettingsCard from '../../../../globals/SettingsCard';
-import { getPersonalSettings, getMedicalSettings, updateMedicalSettings } from '../../../../actionCreators/app';
+import { getMedicalSettings, updateMedicalSettings } from '../../../../actionCreators/app';
 import UserInfo from '../../../../globals/UserInfo';
 import styles, { cardStyles } from './styles';
 
@@ -125,7 +125,7 @@ export class MedicalInfo extends React.Component {
           <SettingsCard styles={cardStyles} settings={this.state.medical} update={this.updateSettings} />
         </View>
         <View style={styles.card}>
-          {/* <SettingsCard styles={cardStyles} settings={this.state.contact} update={this.updateSettings} /> */}
+          <SettingsCard styles={cardStyles} settings={this.state.contact} update={this.updateSettings} />
         </View>
       </View>
     );
@@ -137,7 +137,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getPersonalSettings: () => dispatch(getPersonalSettings()),
   getMedicalSettings: () => dispatch(getMedicalSettings()),
   updateMedicalSettings: (payload) => dispatch(updateMedicalSettings(payload))
 })
