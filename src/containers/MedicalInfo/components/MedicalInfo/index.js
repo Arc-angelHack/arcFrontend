@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import SettingsCard from '../../../../globals/SettingsCard';
 import { getMedicalSettings, updateMedicalSettings } from '../../../../actionCreators/app';
@@ -117,7 +117,7 @@ export class MedicalInfo extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.card}>
           <UserInfo />
         </View>
@@ -127,7 +127,7 @@ export class MedicalInfo extends React.Component {
         <View style={styles.card}>
           <SettingsCard styles={cardStyles} settings={this.state.contact} update={this.updateSettings} />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

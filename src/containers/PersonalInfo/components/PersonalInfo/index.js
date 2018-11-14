@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Slider from 'react-native-slider';
 import SettingsCard from '../../../../globals/SettingsCard';
@@ -136,7 +136,7 @@ export class PersonalInfo extends React.Component {
   render() {
     const { sliderValue } = this.state;
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.userCard}>
           <UserInfo />
         </View>
@@ -156,7 +156,7 @@ export class PersonalInfo extends React.Component {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
