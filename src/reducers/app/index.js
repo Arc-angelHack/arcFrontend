@@ -16,6 +16,13 @@ const initialState = {
     allergies: '',
     emergency_name: '',
     emergency_phone: ''
+  },
+  personalSettings: {
+    birth_date: '1989-02-20T00:00:00.000Z',
+    city: '',
+    state: '',
+    phone: '',
+    gps: 'false',
   }
 };
 
@@ -120,7 +127,10 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        personalSettings: action.data
+        personalSettings: {
+          ...state.personalSettings,
+          ...action.data
+        }
       };
     case types.PERSONAL_SETTINGS_GET_FAILED:
       return {

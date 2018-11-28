@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Slider from 'react-native-slider';
+import { format } from 'date-fns'
 import SettingsCard from '../../../../globals/SettingsCard';
 import { getPersonalSettings, updatePersonalSettings } from '../../../../actionCreators/app';
 import UserInfo from '../../../../globals/UserInfo';
@@ -30,7 +31,7 @@ export class PersonalInfo extends React.Component {
         value: this.props.settings.birth_date
       },
       {
-        title: 'Home City ',
+        title: 'Home City',
         value: this.props.settings.city
       },
       {
@@ -49,33 +50,40 @@ export class PersonalInfo extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.settings !== prevProps.settings) {
-      console.log('Personal Info got settings from redux');
-      console.log(this.props.settings.birth_date);
-      console.log('Personal Info gonna set state')
-      this.setState((prevProps) => {
-        return {
-          personal: [
-            {
-              title: 'Date of birth',
-              value: this.props.settings.birth_date
-            },
-            {
-              title: 'Home City',
-              value: this.props.settings.city
-            },
-            {
-              title: 'Phone',
-              value: this.props.settings.phone
-            },
-            {
-              title: 'Email',
-              value: 'brianadamas@gmail.com'
-            }
-          ]
-        }
-      })
+
+    console.log('Personal Info: Finished Updating. Running functions on update.');
+    console.log(this.props.settings.birth_date);
+
+    for (let setting in this.props.settings) {
+      if (this.props.settings[setting] !== prevProps.settings[setting]) {
+        console.log(`${setting} was not the same. New: ${this.props.settings[setting]} Old: ${prevProps.settings[setting]}`)
+        console.log('[Personal Info]: ', '*Update Function*: New props from redux arent the same. Setting State.')
+        this.setState((prevProps) => {
+          return {
+            personal: [
+              {
+                title: 'Date of birth',
+                value: this.props.settings.birth_date
+              },
+              {
+                title: 'Home City',
+                value: this.props.settings.city
+              },
+              {
+                title: 'Phone',
+                value: this.props.settings.phone
+              },
+              {
+                title: 'Email',
+                value: 'brianadamas@gmail.com'
+              }
+            ]
+          }
+        })
+        break;
+      }
     }
+
   }
 
   updateSettings = async (settings) => {
@@ -85,9 +93,10 @@ export class PersonalInfo extends React.Component {
       ['Phone']: phone,
     } = settings;
     const unfilteredSettings = {
-      birth_date,
+      birth_date: '1989-02-20T00:00:00.000Z',
       city,
-      phone
+      phone,
+      gps: !!this.state.sliderValue
     }
     let payload = {}
     for (let setting in unfilteredSettings) {
@@ -97,35 +106,6 @@ export class PersonalInfo extends React.Component {
     }
     await this.props.updatePersonalSettings(payload)
   }
-  /*
-  {
-    blood_type: '',
-    medication: '',
-    insurance: '',
-    allergies: '',
-    emergency_name: '',
-    emergency_phone: ''
-  }
-  */
-
-  userPersonalConfig = [
-    {
-      title: 'Date of birth',
-      value: 'Feb 20, 1989'
-    },
-    {
-      title: 'Home City ',
-      value: 'San Francisco'
-    },
-    {
-      title: 'Phone',
-      value: '415-204-7848'
-    },
-    {
-      title: 'Email',
-      value: 'brianadamas@gmail.com'
-    }
-  ]
 
   setSliderValue = () => {
     this.setState((prevState) => ({
@@ -135,13 +115,14 @@ export class PersonalInfo extends React.Component {
 
   render() {
     const { sliderValue } = this.state;
+    console.log('[Personal Info]: Rendering with this state: ', this.state)
     return (
       <ScrollView style={styles.container}>
         <View style={styles.userCard}>
           <UserInfo />
         </View>
         <View style={styles.card}>
-          <SettingsCard styles={cardStyles} settings={this.state.personal} update={this.updateSettings} />
+          <SettingsCard styles={cardStyles} settings={this.state.personal} name='[Personals]: ' update={this.updateSettings} />
         </View>
         <View style={styles.card}>
           <Text style={styles.text}>Allow GPS</Text>
@@ -149,7 +130,7 @@ export class PersonalInfo extends React.Component {
             <Slider
               value={sliderValue}
               step={1}
-              trackStyle={sliderValue ? styles.trackStyle : styles.offTrackStyle}
+              trackStyle={this.state.sliderValue ? styles.trackStyle : styles.offTrackStyle}
               thumbStyle={styles.thumbStyle}
               minimumTrackTintColor={'#2e06e9'}
               maximumTrackTintColor={'#D3D3D3'}
@@ -163,7 +144,10 @@ export class PersonalInfo extends React.Component {
 
 
 const mapStateToProps = state => ({
-  settings: state.app.personalSettings
+  settings: {
+    ...state.app.personalSettings,
+    birth_date: format(state.app.personalSettings.birth_date, 'YYYY-MM-DD')
+  }
 })
 
 const mapDispatchToProps = dispatch => ({

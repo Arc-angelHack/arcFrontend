@@ -217,7 +217,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppNavigator persistenceKey={"NavigationState"}/>
+        <AppNavigator />
       </Provider>
     );
   }

@@ -30,16 +30,21 @@ export class SettingsCard extends React.Component {
     this.props.settings.map(configObject => {
       this.state.settings[configObject.title] = configObject.value
     })
-    console.log('Settings Card Constructed.')
+    console.log(this.props.name, 'Settings Card Constructed.')
   }
 
   loadData = () => {
-    console.log('Settings Card gonna load the Array')
     const settings = {};
     this.props.settings.map(configObject => {
       settings[configObject.title] = configObject.value
     });
-    this.setState(() => ({ settings }))
+    for (let setting in settings) {
+      if (settings[setting] !== this.state.settings[setting]) {
+        console.log(this.props.name, '*Update Function*: Data was not the same. Setting State')
+        this.setState(() => ({ settings }))
+        break;
+      }
+    }
   }
 
   handleTextChange = (title, text) => {
@@ -56,28 +61,28 @@ export class SettingsCard extends React.Component {
   }
   refHolder = {}
 
-  renderNewSettings = (incomingSettings, currentSettings) => {
-
-  }
-
   componentDidUpdate(prevProps, prevState) {
-    console.log('update')
+    console.log(this.props.name, 'just finished rendering. Running Update functions: ')
     if (this.props.settings !== prevProps.settings) {
       this.loadData();
       // times when updates happen:
       //parent fetches last data from server:
       //this component actually renders new text
       //parent posts and returns new data from server:
+    } else {
+      console.log(this.props.name, 'Did not recieve new props from parent.')
     }
     if (prevProps.edit === true && this.props.edit === false) {
       this.props.update(this.state.settings);
+    } else {
+      console.log(this.props.name, 'Did not run update (from a finished edit).')
     }
   }
 
   navigateToSetting = (setting) => { }
 
   render() {
-    console.log('rendering, ', this.state.settings)
+    console.log(this.props.name, 'Rendering with these settings:  ', this.state.settings)
     return (
       <View style={this.props.styles.container}>
         {this.props.settings.map((config, i) => {

@@ -19,7 +19,7 @@ export class PersonalScreen extends React.PureComponent {
   }
   render() {
     return (
-      <View />
+      <PersonalInfo />
     );
   }
 }

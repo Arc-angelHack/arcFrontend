@@ -122,10 +122,10 @@ export class MedicalInfo extends React.Component {
           <UserInfo />
         </View>
         <View style={styles.card}>
-          <SettingsCard styles={cardStyles} settings={this.state.medical} update={this.updateSettings} />
+          <SettingsCard styles={cardStyles} settings={this.state.medical} name="[Medicals]: " update={this.updateSettings} />
         </View>
         <View style={styles.card}>
-          <SettingsCard styles={cardStyles} settings={this.state.contact} update={this.updateSettings} />
+          <SettingsCard styles={cardStyles} settings={this.state.contact} name="[Contacts]: " update={this.updateSettings} />
         </View>
       </ScrollView>
     );

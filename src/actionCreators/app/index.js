@@ -62,6 +62,7 @@ const manualLogin = (credentials) =>
         },
         body: JSON.stringify(credentials),
       });
+      console.log(response);
       if (response.status === 200) {
         const token = JSON.parse(response._bodyText).token;
         const userId = JSON.parse(response._bodyText).id;
@@ -90,6 +91,7 @@ const signupWithEmail = (user) => {
         },
         body: JSON.stringify(user),
       });
+      console.log(response)
       if (response.status === 201) {
         const token = JSON.parse(response._bodyText).token;
         const userId = JSON.parse(response._bodyText).id;
@@ -213,11 +215,11 @@ const createPersonalSettings = () => {
           'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({
-          birth_date: '',
+          birth_date: '1989-02-20T00:00:00.000Z',
           city: '',
           state: '',
           phone: '',
-          gps: '',
+          gps: 'false',
         })
       });
       console.log(response);
@@ -231,9 +233,10 @@ const getPersonalSettings = () => {
   return async dispatch => {
     dispatch({ type: types.PERSONAL_SETTINGS_GET_START })
     try {
+      console.log('[API] GET personal Settings')
       const token = await AsyncStorage.getItem('token');
       const userId = await AsyncStorage.getItem('userId');
-      const response = await fetch(`${baseURL}profile/medical/${userId}`, {
+      const response = await fetch(`${baseURL}profile/personal/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -246,8 +249,8 @@ const getPersonalSettings = () => {
         console.log('Initiating default medical settings');
         dispatch(createMedicalSettings());
       }
-      const { data } = settings;
-      dispatch({ type: types.PERSONAL_SETTINGS_GET_SUCCESS, data })
+      const { data: { birth_date, city, state, phone, gps } } = settings;
+      dispatch({ type: types.PERSONAL_SETTINGS_GET_SUCCESS, data: { birth_date, city, state, phone, gps } })
     } catch (error) {
       dispatch({ type: types.PERSONAL_SETTINGS_GET_FAILED })
       console.log(error);
@@ -306,6 +309,7 @@ export {
   hideCommunityList,
   setLogin,
   logout,
+  createPersonalSettings,
   getPersonalSettings,
   updatePersonalSettings,
   getMedicalSettings,
@@ -313,3 +317,4 @@ export {
   startEdit,
   endEdit
 };
+
